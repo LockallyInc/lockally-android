@@ -1,0 +1,42 @@
+# Release workflow for the Android SDK (Maven Central `com.lockally:lockally-android`).
+#
+# TEMPLATE — inert in this monorepo. Copy to `.github/workflows/publish.yml` in
+# the SDK's own repo (github.com/lockallyinc/lockally-android). Tag-driven:
+# push `vX.Y.Z`.
+#
+# Like the Java SDK, Maven Central requires a Sonatype Central account and
+# GPG-signed artifacts. The generated build.gradle uses `maven-publish`; add the
+# Central publishing + signing plugins (or a settings overlay) before the first
+# release, then this workflow signs and uploads.
+#
+# One-time setup:
+#   - Sonatype Central (central.sonatype.com); verify `com.lockally` via a DNS
+#     TXT record on lockally.com (shared with the Java SDK namespace).
+#   - Repo secrets: OSSRH_USERNAME, OSSRH_TOKEN, GPG_PRIVATE_KEY (ASCII-armored),
+#     GPG_PASSPHRASE. Claude never handles these.
+name: Publish Maven Central
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Publish (signed) to Central Portal
+        run: chmod +x ./gradlew && ./gradlew publishToMavenCentral --no-daemon --no-configuration-cache
+        env:
+          # vanniktech maven-publish reads these ORG_GRADLE_PROJECT_* as Gradle properties
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_TOKEN }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_PRIVATE_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSPHRASE }}
