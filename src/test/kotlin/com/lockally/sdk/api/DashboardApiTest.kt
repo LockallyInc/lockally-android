@@ -34,6 +34,7 @@ import com.lockally.sdk.model.GetSecurity200Response
 import com.lockally.sdk.model.GetStorage200Response
 import com.lockally.sdk.model.GetUserInsights200Response
 import com.lockally.sdk.model.Problem
+import com.lockally.sdk.model.TenantHealthReport
 
 class DashboardApiTest : ShouldSpec() {
     init {
@@ -78,7 +79,7 @@ class DashboardApiTest : ShouldSpec() {
         // to test getTenantHealth
         should("test getTenantHealth") {
             // uncomment below to test getTenantHealth
-            //val result : kotlin.Any = apiInstance.getTenantHealth()
+            //val result : TenantHealthReport = apiInstance.getTenantHealth()
             //result shouldBe ("TODO")
         }
 

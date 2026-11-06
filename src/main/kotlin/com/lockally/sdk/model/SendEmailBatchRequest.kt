@@ -33,13 +33,18 @@ import kotlinx.serialization.Contextual
  * 
  *
  * @param messages 
+ * @param variables Template variables every message in the batch inherits. Each message's own `variables` override these key by key, so shared values are written once and per-recipient ones stay per-recipient.  Without this, a 500-message batch repeats every shared variable 500 times: most of the payload, and 500 places for one of them to differ by a typo. 
  */
 @Serializable
 
 data class SendEmailBatchRequest (
 
     @SerialName(value = "messages")
-    val messages: kotlin.collections.List<SendMessage>
+    val messages: kotlin.collections.List<SendMessage>,
+
+    /* Template variables every message in the batch inherits. Each message's own `variables` override these key by key, so shared values are written once and per-recipient ones stay per-recipient.  Without this, a 500-message batch repeats every shared variable 500 times: most of the payload, and 500 places for one of them to differ by a typo.  */
+    @SerialName(value = "variables")
+    val variables: kotlin.collections.Map<kotlin.String, kotlin.String>? = null
 
 ) {
 

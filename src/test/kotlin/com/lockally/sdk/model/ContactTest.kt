@@ -117,5 +117,17 @@ class ContactTest : ShouldSpec() {
             //modelInstance.role shouldBe ("TODO")
         }
 
+        // to test the property `externalSystem` - The system that owns this contact's external id. Absent on contacts made by hand.
+        should("test externalSystem") {
+            // uncomment below to test the property
+            //modelInstance.externalSystem shouldBe ("TODO")
+        }
+
+        // to test the property `externalId` - The contact's id in `external_system`. Absent on contacts made by hand.
+        should("test externalId") {
+            // uncomment below to test the property
+            //modelInstance.externalId shouldBe ("TODO")
+        }
+
     }
 }

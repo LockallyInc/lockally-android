@@ -99,5 +99,17 @@ class MessageTest : ShouldSpec() {
             //modelInstance.sizeBytes shouldBe ("TODO")
         }
 
+        // to test the property `metadata` - The sender's own key/value from the send request. Always present; `{}` when none was set.
+        should("test metadata") {
+            // uncomment below to test the property
+            //modelInstance.metadata shouldBe ("TODO")
+        }
+
+        // to test the property `tags` - Grouping labels, lowercased and deduplicated. Always present; `[]` when none were set.
+        should("test tags") {
+            // uncomment below to test the property
+            //modelInstance.tags shouldBe ("TODO")
+        }
+
     }
 }

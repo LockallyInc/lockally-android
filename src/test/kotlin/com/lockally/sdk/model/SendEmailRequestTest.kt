@@ -118,6 +118,30 @@ class SendEmailRequestTest : ShouldSpec() {
             //modelInstance.sendAt shouldBe ("TODO")
         }
 
+        // to test the property `metadata` - Arbitrary key/value you attach to this message and get back on every delivery webhook for it, so a send can be matched to your own records without a lookup table.  **It never leaves Lockally.** A custom entry in `headers` goes out on the wire to the recipient, which is why that is not a substitute: order ids and internal identifiers do not belong in a header the recipient can read.  At most 20 keys, keys at most 64 characters, values at most 512. **Over a limit is refused with a `400`, never truncated**: a silently shortened order id succeeds and then fails to match weeks later.  Not indexed and not filterable. 
+        should("test metadata") {
+            // uncomment below to test the property
+            //modelInstance.metadata shouldBe ("TODO")
+        }
+
+        // to test the property `tags` - Labels that group this send for filtering and analytics: campaign, template, environment.  **Lowercased, trimmed and deduplicated on write**, so the grouping does not depend on every caller spelling them identically. `Campaign-X` is stored as `campaign-x`, and either spelling matches it in a filter.  At most 10 per message after deduplication, each at most 32 characters. Over either is a `400` rather than a trimmed list: a send missing the tag it was tagged for is worse than a refusal.  Unlike `metadata`, tags ARE queryable: filter with `GET /v1/messages?tag=` and group with `GET /v1/messages/stats?tag=`. 
+        should("test tags") {
+            // uncomment below to test the property
+            //modelInstance.tags shouldBe ("TODO")
+        }
+
+        // to test the property `trackOpens` - Override the account's open-tracking setting for this one send. Omit to inherit it.  Three states matter here: `true`, `false`, and absent. A transactional receipt can set `false` without the account turning tracking off for its marketing. 
+        should("test trackOpens") {
+            // uncomment below to test the property
+            //modelInstance.trackOpens shouldBe ("TODO")
+        }
+
+        // to test the property `trackClicks` - As `track_opens`, for click tracking. Click tracking rewrites `http(s)` links in the **HTML** part only: the plain-text part is never rewritten, because a visible redirect URL is what recipients complain about. A text-only send is therefore not click-tracked. 
+        should("test trackClicks") {
+            // uncomment below to test the property
+            //modelInstance.trackClicks shouldBe ("TODO")
+        }
+
         // to test the property `attachments`
         should("test attachments") {
             // uncomment below to test the property

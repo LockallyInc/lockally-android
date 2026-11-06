@@ -216,6 +216,7 @@ open class SendApi(basePath: kotlin.String = defaultBasePath, client: Call.Facto
      * @param from Window start (default 7 days ago). (optional)
      * @param to Window end (default now). (optional)
      * @param domain Filter by sender domain. (optional)
+     * @param tag Group the window by the sender&#39;s own tags: one tag, or a comma-separated set meaning ANY. Case-insensitive. This is the dimension that tells a transactional stream from a notification one. (optional)
      * @return MessageStats
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
@@ -225,8 +226,8 @@ open class SendApi(basePath: kotlin.String = defaultBasePath, client: Call.Facto
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getMessageStats(from: kotlin.time.Instant? = null, to: kotlin.time.Instant? = null, domain: kotlin.String? = null) : MessageStats = withContext(Dispatchers.IO) {
-        val localVarResponse = getMessageStatsWithHttpInfo(from = from, to = to, domain = domain)
+    suspend fun getMessageStats(from: kotlin.time.Instant? = null, to: kotlin.time.Instant? = null, domain: kotlin.String? = null, tag: kotlin.String? = null) : MessageStats = withContext(Dispatchers.IO) {
+        val localVarResponse = getMessageStatsWithHttpInfo(from = from, to = to, domain = domain, tag = tag)
 
         return@withContext when (localVarResponse.responseType) {
             ResponseType.Success -> (localVarResponse as Success<*>).data as MessageStats
@@ -250,14 +251,15 @@ open class SendApi(basePath: kotlin.String = defaultBasePath, client: Call.Facto
      * @param from Window start (default 7 days ago). (optional)
      * @param to Window end (default now). (optional)
      * @param domain Filter by sender domain. (optional)
+     * @param tag Group the window by the sender&#39;s own tags: one tag, or a comma-separated set meaning ANY. Case-insensitive. This is the dimension that tells a transactional stream from a notification one. (optional)
      * @return ApiResponse<MessageStats?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    suspend fun getMessageStatsWithHttpInfo(from: kotlin.time.Instant?, to: kotlin.time.Instant?, domain: kotlin.String?) : ApiResponse<MessageStats?> = withContext(Dispatchers.IO) {
-        val localVariableConfig = getMessageStatsRequestConfig(from = from, to = to, domain = domain)
+    suspend fun getMessageStatsWithHttpInfo(from: kotlin.time.Instant?, to: kotlin.time.Instant?, domain: kotlin.String?, tag: kotlin.String?) : ApiResponse<MessageStats?> = withContext(Dispatchers.IO) {
+        val localVariableConfig = getMessageStatsRequestConfig(from = from, to = to, domain = domain, tag = tag)
 
         return@withContext request<Unit, MessageStats>(
             localVariableConfig
@@ -270,9 +272,10 @@ open class SendApi(basePath: kotlin.String = defaultBasePath, client: Call.Facto
      * @param from Window start (default 7 days ago). (optional)
      * @param to Window end (default now). (optional)
      * @param domain Filter by sender domain. (optional)
+     * @param tag Group the window by the sender&#39;s own tags: one tag, or a comma-separated set meaning ANY. Case-insensitive. This is the dimension that tells a transactional stream from a notification one. (optional)
      * @return RequestConfig
      */
-    fun getMessageStatsRequestConfig(from: kotlin.time.Instant?, to: kotlin.time.Instant?, domain: kotlin.String?) : RequestConfig<Unit> {
+    fun getMessageStatsRequestConfig(from: kotlin.time.Instant?, to: kotlin.time.Instant?, domain: kotlin.String?, tag: kotlin.String?) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, kotlin.collections.List<kotlin.String>>()
             .apply {
@@ -284,6 +287,9 @@ open class SendApi(basePath: kotlin.String = defaultBasePath, client: Call.Facto
                 }
                 if (domain != null) {
                     put("domain", listOf(domain.toString()))
+                }
+                if (tag != null) {
+                    put("tag", listOf(tag.toString()))
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -321,15 +327,52 @@ open class SendApi(basePath: kotlin.String = defaultBasePath, client: Call.Facto
      }
 
     /**
+     * enum for parameter sort
+     */
+     enum class SortListMessages(val value: kotlin.String) {
+         @SerialName(value = "queued_at") queued_at("queued_at"),
+         @SerialName(value = "updated_at") updated_at("updated_at");
+
+        /**
+         * Override [toString()] to avoid using the enum variable name as the value, and instead use
+         * the actual value defined in the API spec file.
+         *
+         * This solves a problem when the variable name and its value are different, and ensures that
+         * the client sends the correct enum values to the server always.
+         */
+        override fun toString(): kotlin.String = "$value"
+     }
+
+    /**
+     * enum for parameter order
+     */
+     enum class OrderListMessages(val value: kotlin.String) {
+         @SerialName(value = "asc") asc("asc"),
+         @SerialName(value = "desc") desc("desc");
+
+        /**
+         * Override [toString()] to avoid using the enum variable name as the value, and instead use
+         * the actual value defined in the API spec file.
+         *
+         * This solves a problem when the variable name and its value are different, and ensures that
+         * the client sends the correct enum values to the server always.
+         */
+        override fun toString(): kotlin.String = "$value"
+     }
+
+    /**
      * GET /v1/messages
      * List outbound messages
      * Returns recent outbound messages for the calling tenant, sorted newest first. 
      * @param status  (optional)
      * @param sender Exact match against the &#x60;from&#x60; mailbox. (optional)
+     * @param tag Filter to messages carrying any of these tags. One tag, or a comma-separated set meaning ANY. Case-insensitive: the value is normalised the same way tags are on write. (optional)
      * @param q Free-text search across subject + sender. (optional)
      * @param since Only messages queued at or after this RFC 3339 instant. (optional)
      * @param cursor queued_at of the prior page boundary. Pass back the &#x60;next_cursor&#x60; returned by the previous call. (optional)
      * @param limit  (optional, default to 50)
+     * @param sort Field to order by. Only indexed columns are offered: an unindexed sort on this table is a full scan of the account&#39;s send history. status and sender are filters instead. (optional, default to Sort.queued_at)
+     * @param order Defaults to desc for the default field and asc for any other. The order is always made total by a tie-break on id, so paging cannot repeat or skip a row that shares a timestamp. cursor encodes queued_at, so combining it with another sort is a 400 rather than a wrong page. (optional)
      * @return ListMessages200Response
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
@@ -339,8 +382,8 @@ open class SendApi(basePath: kotlin.String = defaultBasePath, client: Call.Facto
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listMessages(status: StatusListMessages? = null, sender: kotlin.String? = null, q: kotlin.String? = null, since: kotlin.time.Instant? = null, cursor: kotlin.String? = null, limit: kotlin.Int? = 50) : ListMessages200Response = withContext(Dispatchers.IO) {
-        val localVarResponse = listMessagesWithHttpInfo(status = status, sender = sender, q = q, since = since, cursor = cursor, limit = limit)
+    suspend fun listMessages(status: StatusListMessages? = null, sender: kotlin.String? = null, tag: kotlin.String? = null, q: kotlin.String? = null, since: kotlin.time.Instant? = null, cursor: kotlin.String? = null, limit: kotlin.Int? = 50, sort: SortListMessages? = SortListMessages.queued_at, order: OrderListMessages? = null) : ListMessages200Response = withContext(Dispatchers.IO) {
+        val localVarResponse = listMessagesWithHttpInfo(status = status, sender = sender, tag = tag, q = q, since = since, cursor = cursor, limit = limit, sort = sort, order = order)
 
         return@withContext when (localVarResponse.responseType) {
             ResponseType.Success -> (localVarResponse as Success<*>).data as ListMessages200Response
@@ -363,18 +406,21 @@ open class SendApi(basePath: kotlin.String = defaultBasePath, client: Call.Facto
      * Returns recent outbound messages for the calling tenant, sorted newest first. 
      * @param status  (optional)
      * @param sender Exact match against the &#x60;from&#x60; mailbox. (optional)
+     * @param tag Filter to messages carrying any of these tags. One tag, or a comma-separated set meaning ANY. Case-insensitive: the value is normalised the same way tags are on write. (optional)
      * @param q Free-text search across subject + sender. (optional)
      * @param since Only messages queued at or after this RFC 3339 instant. (optional)
      * @param cursor queued_at of the prior page boundary. Pass back the &#x60;next_cursor&#x60; returned by the previous call. (optional)
      * @param limit  (optional, default to 50)
+     * @param sort Field to order by. Only indexed columns are offered: an unindexed sort on this table is a full scan of the account&#39;s send history. status and sender are filters instead. (optional, default to Sort.queued_at)
+     * @param order Defaults to desc for the default field and asc for any other. The order is always made total by a tie-break on id, so paging cannot repeat or skip a row that shares a timestamp. cursor encodes queued_at, so combining it with another sort is a 400 rather than a wrong page. (optional)
      * @return ApiResponse<ListMessages200Response?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    suspend fun listMessagesWithHttpInfo(status: StatusListMessages?, sender: kotlin.String?, q: kotlin.String?, since: kotlin.time.Instant?, cursor: kotlin.String?, limit: kotlin.Int?) : ApiResponse<ListMessages200Response?> = withContext(Dispatchers.IO) {
-        val localVariableConfig = listMessagesRequestConfig(status = status, sender = sender, q = q, since = since, cursor = cursor, limit = limit)
+    suspend fun listMessagesWithHttpInfo(status: StatusListMessages?, sender: kotlin.String?, tag: kotlin.String?, q: kotlin.String?, since: kotlin.time.Instant?, cursor: kotlin.String?, limit: kotlin.Int?, sort: SortListMessages?, order: OrderListMessages?) : ApiResponse<ListMessages200Response?> = withContext(Dispatchers.IO) {
+        val localVariableConfig = listMessagesRequestConfig(status = status, sender = sender, tag = tag, q = q, since = since, cursor = cursor, limit = limit, sort = sort, order = order)
 
         return@withContext request<Unit, ListMessages200Response>(
             localVariableConfig
@@ -386,13 +432,16 @@ open class SendApi(basePath: kotlin.String = defaultBasePath, client: Call.Facto
      *
      * @param status  (optional)
      * @param sender Exact match against the &#x60;from&#x60; mailbox. (optional)
+     * @param tag Filter to messages carrying any of these tags. One tag, or a comma-separated set meaning ANY. Case-insensitive: the value is normalised the same way tags are on write. (optional)
      * @param q Free-text search across subject + sender. (optional)
      * @param since Only messages queued at or after this RFC 3339 instant. (optional)
      * @param cursor queued_at of the prior page boundary. Pass back the &#x60;next_cursor&#x60; returned by the previous call. (optional)
      * @param limit  (optional, default to 50)
+     * @param sort Field to order by. Only indexed columns are offered: an unindexed sort on this table is a full scan of the account&#39;s send history. status and sender are filters instead. (optional, default to Sort.queued_at)
+     * @param order Defaults to desc for the default field and asc for any other. The order is always made total by a tie-break on id, so paging cannot repeat or skip a row that shares a timestamp. cursor encodes queued_at, so combining it with another sort is a 400 rather than a wrong page. (optional)
      * @return RequestConfig
      */
-    fun listMessagesRequestConfig(status: StatusListMessages?, sender: kotlin.String?, q: kotlin.String?, since: kotlin.time.Instant?, cursor: kotlin.String?, limit: kotlin.Int?) : RequestConfig<Unit> {
+    fun listMessagesRequestConfig(status: StatusListMessages?, sender: kotlin.String?, tag: kotlin.String?, q: kotlin.String?, since: kotlin.time.Instant?, cursor: kotlin.String?, limit: kotlin.Int?, sort: SortListMessages?, order: OrderListMessages?) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, kotlin.collections.List<kotlin.String>>()
             .apply {
@@ -401,6 +450,9 @@ open class SendApi(basePath: kotlin.String = defaultBasePath, client: Call.Facto
                 }
                 if (sender != null) {
                     put("sender", listOf(sender.toString()))
+                }
+                if (tag != null) {
+                    put("tag", listOf(tag.toString()))
                 }
                 if (q != null) {
                     put("q", listOf(q.toString()))
@@ -413,6 +465,12 @@ open class SendApi(basePath: kotlin.String = defaultBasePath, client: Call.Facto
                 }
                 if (limit != null) {
                     put("limit", listOf(limit.toString()))
+                }
+                if (sort != null) {
+                    put("sort", listOf(sort.value))
+                }
+                if (order != null) {
+                    put("order", listOf(order.value))
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()

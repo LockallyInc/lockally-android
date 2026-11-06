@@ -51,5 +51,11 @@ class CreateApiKeyRequestTest : ShouldSpec() {
             //modelInstance.test shouldBe ("TODO")
         }
 
+        // to test the property `expiresAt` - Optional. When the key stops authenticating. Omit it for a key that does not expire. Must be in the future: an expiry already past would mint a key that fails its first request. 
+        should("test expiresAt") {
+            // uncomment below to test the property
+            //modelInstance.expiresAt shouldBe ("TODO")
+        }
+
     }
 }

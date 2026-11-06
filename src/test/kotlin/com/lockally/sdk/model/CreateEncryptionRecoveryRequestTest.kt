@@ -33,16 +33,16 @@ class CreateEncryptionRecoveryRequestTest : ShouldSpec() {
         // uncomment below to create an instance of CreateEncryptionRecoveryRequest
         //val modelInstance = CreateEncryptionRecoveryRequest()
 
-        // to test the property `mailboxEmail`
-        should("test mailboxEmail") {
-            // uncomment below to test the property
-            //modelInstance.mailboxEmail shouldBe ("TODO")
-        }
-
         // to test the property `recoveryBlob`
         should("test recoveryBlob") {
             // uncomment below to test the property
             //modelInstance.recoveryBlob shouldBe ("TODO")
+        }
+
+        // to test the property `mailboxEmail`
+        should("test mailboxEmail") {
+            // uncomment below to test the property
+            //modelInstance.mailboxEmail shouldBe ("TODO")
         }
 
     }

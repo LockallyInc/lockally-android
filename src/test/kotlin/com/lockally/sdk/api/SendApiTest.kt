@@ -63,7 +63,8 @@ class SendApiTest : ShouldSpec() {
             //val from : kotlin.time.Instant = 2013-10-20T19:20:30+01:00 // kotlin.time.Instant | Window start (default 7 days ago).
             //val to : kotlin.time.Instant = 2013-10-20T19:20:30+01:00 // kotlin.time.Instant | Window end (default now).
             //val domain : kotlin.String = domain_example // kotlin.String | Filter by sender domain.
-            //val result : MessageStats = apiInstance.getMessageStats(from, to, domain)
+            //val tag : kotlin.String = tag_example // kotlin.String | Group the window by the sender's own tags: one tag, or a comma-separated set meaning ANY. Case-insensitive. This is the dimension that tells a transactional stream from a notification one.
+            //val result : MessageStats = apiInstance.getMessageStats(from, to, domain, tag)
             //result shouldBe ("TODO")
         }
 
@@ -72,11 +73,14 @@ class SendApiTest : ShouldSpec() {
             // uncomment below to test listMessages
             //val status : kotlin.String = status_example // kotlin.String | 
             //val sender : kotlin.String = sender_example // kotlin.String | Exact match against the `from` mailbox.
+            //val tag : kotlin.String = tag_example // kotlin.String | Filter to messages carrying any of these tags. One tag, or a comma-separated set meaning ANY. Case-insensitive: the value is normalised the same way tags are on write.
             //val q : kotlin.String = q_example // kotlin.String | Free-text search across subject + sender.
             //val since : kotlin.time.Instant = 2013-10-20T19:20:30+01:00 // kotlin.time.Instant | Only messages queued at or after this RFC 3339 instant.
             //val cursor : kotlin.String = cursor_example // kotlin.String | queued_at of the prior page boundary. Pass back the `next_cursor` returned by the previous call.
             //val limit : kotlin.Int = 56 // kotlin.Int | 
-            //val result : ListMessages200Response = apiInstance.listMessages(status, sender, q, since, cursor, limit)
+            //val sort : kotlin.String = sort_example // kotlin.String | Field to order by. Only indexed columns are offered: an unindexed sort on this table is a full scan of the account's send history. status and sender are filters instead.
+            //val order : kotlin.String = order_example // kotlin.String | Defaults to desc for the default field and asc for any other. The order is always made total by a tie-break on id, so paging cannot repeat or skip a row that shares a timestamp. cursor encodes queued_at, so combining it with another sort is a 400 rather than a wrong page.
+            //val result : ListMessages200Response = apiInstance.listMessages(status, sender, tag, q, since, cursor, limit, sort, order)
             //result shouldBe ("TODO")
         }
 

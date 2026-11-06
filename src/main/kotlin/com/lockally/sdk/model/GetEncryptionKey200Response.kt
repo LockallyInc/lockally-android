@@ -37,6 +37,11 @@ import kotlinx.serialization.Contextual
  * @param encryptedPrivateKey 
  * @param kdfParams 
  * @param version 
+ * @param createdAt 
+ * @param rotatedAt 
+ * @param hasRecovery 
+ * @param recoverySetAt 
+ * @param recoveryBlob 
  */
 @Serializable
 
@@ -58,7 +63,22 @@ data class GetEncryptionKey200Response (
     val kdfParams: kotlin.Any? = null,
 
     @SerialName(value = "version")
-    val version: kotlin.Int? = null
+    val version: kotlin.Int? = null,
+
+    @Contextual @SerialName(value = "created_at")
+    val createdAt: kotlin.time.Instant? = null,
+
+    @Contextual @SerialName(value = "rotated_at")
+    val rotatedAt: kotlin.time.Instant? = null,
+
+    @SerialName(value = "has_recovery")
+    val hasRecovery: kotlin.Boolean? = null,
+
+    @Contextual @SerialName(value = "recovery_set_at")
+    val recoverySetAt: kotlin.time.Instant? = null,
+
+    @SerialName(value = "recovery_blob")
+    val recoveryBlob: kotlin.String? = null
 
 ) {
 

@@ -33,7 +33,7 @@ class SignupRequestTest : ShouldSpec() {
         // uncomment below to create an instance of SignupRequest
         //val modelInstance = SignupRequest()
 
-        // to test the property `slug`
+        // to test the property `slug` - Workspace id. 3 to 63 characters of lowercase a-z, 0-9 and hyphens, starting and ending with a letter or digit. Anything else is refused with 400 Invalid workspace id.
         should("test slug") {
             // uncomment below to test the property
             //modelInstance.slug shouldBe ("TODO")

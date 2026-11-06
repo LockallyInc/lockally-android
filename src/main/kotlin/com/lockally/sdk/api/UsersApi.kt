@@ -137,8 +137,8 @@ open class UsersApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
 
     /**
      * DELETE /v1/users/{id}
-     * Delete a user
-     * Soft-deletes the user by setting status to deprovisioned.
+     * Deprovision a user
+     * Sets the user&#39;s status to &#x60;deprovisioned&#x60; and ends their access: each of their mailboxes and their console membership is disabled, app passwords are revoked, and every webmail and console session ends. Their mail is kept. API keys belong to the workspace and are not revoked; rotate any the person had access to. 
      * @param id 
      * @return void
      * @throws IllegalStateException If the request is not correctly configured
@@ -168,8 +168,8 @@ open class UsersApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
 
     /**
      * DELETE /v1/users/{id}
-     * Delete a user
-     * Soft-deletes the user by setting status to deprovisioned.
+     * Deprovision a user
+     * Sets the user&#39;s status to &#x60;deprovisioned&#x60; and ends their access: each of their mailboxes and their console membership is disabled, app passwords are revoked, and every webmail and console session ends. Their mail is kept. API keys belong to the workspace and are not revoked; rotate any the person had access to. 
      * @param id 
      * @return ApiResponse<Unit?>
      * @throws IllegalStateException If the request is not correctly configured
@@ -360,7 +360,7 @@ open class UsersApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
     /**
      * PATCH /v1/users/{id}
      * Update a user
-     * 
+     * Setting &#x60;status&#x60; to &#x60;suspended&#x60; or &#x60;deprovisioned&#x60; takes away everything the person signs in with: each of their mailboxes and their console membership is disabled, app passwords are revoked, and every webmail and console session ends. Setting it back to &#x60;active&#x60; restores what the suspension disabled, and nothing an admin disabled for another reason. API keys belong to the workspace, not to the person who created them, and are not revoked; rotate any the person had access to. 
      * @param id 
      * @param updateUserRequest 
      * @return User
@@ -393,7 +393,7 @@ open class UsersApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
     /**
      * PATCH /v1/users/{id}
      * Update a user
-     * 
+     * Setting &#x60;status&#x60; to &#x60;suspended&#x60; or &#x60;deprovisioned&#x60; takes away everything the person signs in with: each of their mailboxes and their console membership is disabled, app passwords are revoked, and every webmail and console session ends. Setting it back to &#x60;active&#x60; restores what the suspension disabled, and nothing an admin disabled for another reason. API keys belong to the workspace, not to the person who created them, and are not revoked; rotate any the person had access to. 
      * @param id 
      * @param updateUserRequest 
      * @return ApiResponse<User?>

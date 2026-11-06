@@ -37,6 +37,7 @@ import com.lockally.sdk.model.ListMigrations200Response
 import com.lockally.sdk.model.MapMigrationRequest
 import com.lockally.sdk.model.Migration
 import com.lockally.sdk.model.MigrationCredential
+import com.lockally.sdk.model.MigrationDNSCheck
 import com.lockally.sdk.model.MigrationProgress
 import com.lockally.sdk.model.Problem
 import com.lockally.sdk.model.StartMigration202Response
@@ -60,7 +61,7 @@ class MigrationsApiTest : ShouldSpec() {
         should("test checkMigrationDNS") {
             // uncomment below to test checkMigrationDNS
             //val id : java.util.UUID = 38400000-8cf0-11bd-b23e-10b96e4ef00d // java.util.UUID | 
-            //val result : kotlin.Any = apiInstance.checkMigrationDNS(id)
+            //val result : MigrationDNSCheck = apiInstance.checkMigrationDNS(id)
             //result shouldBe ("TODO")
         }
 

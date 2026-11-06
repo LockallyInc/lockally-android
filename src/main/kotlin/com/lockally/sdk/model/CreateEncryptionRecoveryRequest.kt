@@ -31,18 +31,18 @@ import kotlinx.serialization.Contextual
 /**
  * 
  *
- * @param mailboxEmail 
  * @param recoveryBlob 
+ * @param mailboxEmail 
  */
 @Serializable
 
 data class CreateEncryptionRecoveryRequest (
 
-    @SerialName(value = "mailbox_email")
-    val mailboxEmail: kotlin.String,
-
     @SerialName(value = "recovery_blob")
-    val recoveryBlob: kotlin.String
+    val recoveryBlob: kotlin.String,
+
+    @SerialName(value = "mailbox_email")
+    val mailboxEmail: kotlin.String? = null
 
 ) {
 

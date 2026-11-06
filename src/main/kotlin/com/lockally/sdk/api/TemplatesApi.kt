@@ -279,9 +279,46 @@ open class TemplatesApi(basePath: kotlin.String = defaultBasePath, client: Call.
     }
 
     /**
+     * enum for parameter sort
+     */
+     enum class SortListTemplates(val value: kotlin.String) {
+         @SerialName(value = "name") name("name"),
+         @SerialName(value = "created_at") created_at("created_at"),
+         @SerialName(value = "updated_at") updated_at("updated_at");
+
+        /**
+         * Override [toString()] to avoid using the enum variable name as the value, and instead use
+         * the actual value defined in the API spec file.
+         *
+         * This solves a problem when the variable name and its value are different, and ensures that
+         * the client sends the correct enum values to the server always.
+         */
+        override fun toString(): kotlin.String = "$value"
+     }
+
+    /**
+     * enum for parameter order
+     */
+     enum class OrderListTemplates(val value: kotlin.String) {
+         @SerialName(value = "asc") asc("asc"),
+         @SerialName(value = "desc") desc("desc");
+
+        /**
+         * Override [toString()] to avoid using the enum variable name as the value, and instead use
+         * the actual value defined in the API spec file.
+         *
+         * This solves a problem when the variable name and its value are different, and ensures that
+         * the client sends the correct enum values to the server always.
+         */
+        override fun toString(): kotlin.String = "$value"
+     }
+
+    /**
      * GET /v1/templates
      * List templates
      * 
+     * @param sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to Sort.name)
+     * @param order Defaults to asc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @return ListTemplates200Response
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
@@ -291,8 +328,8 @@ open class TemplatesApi(basePath: kotlin.String = defaultBasePath, client: Call.
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTemplates() : ListTemplates200Response = withContext(Dispatchers.IO) {
-        val localVarResponse = listTemplatesWithHttpInfo()
+    suspend fun listTemplates(sort: SortListTemplates? = SortListTemplates.name, order: OrderListTemplates? = null) : ListTemplates200Response = withContext(Dispatchers.IO) {
+        val localVarResponse = listTemplatesWithHttpInfo(sort = sort, order = order)
 
         return@withContext when (localVarResponse.responseType) {
             ResponseType.Success -> (localVarResponse as Success<*>).data as ListTemplates200Response
@@ -313,14 +350,16 @@ open class TemplatesApi(basePath: kotlin.String = defaultBasePath, client: Call.
      * GET /v1/templates
      * List templates
      * 
+     * @param sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to Sort.name)
+     * @param order Defaults to asc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @return ApiResponse<ListTemplates200Response?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    suspend fun listTemplatesWithHttpInfo() : ApiResponse<ListTemplates200Response?> = withContext(Dispatchers.IO) {
-        val localVariableConfig = listTemplatesRequestConfig()
+    suspend fun listTemplatesWithHttpInfo(sort: SortListTemplates?, order: OrderListTemplates?) : ApiResponse<ListTemplates200Response?> = withContext(Dispatchers.IO) {
+        val localVariableConfig = listTemplatesRequestConfig(sort = sort, order = order)
 
         return@withContext request<Unit, ListTemplates200Response>(
             localVariableConfig
@@ -330,11 +369,21 @@ open class TemplatesApi(basePath: kotlin.String = defaultBasePath, client: Call.
     /**
      * To obtain the request config of the operation listTemplates
      *
+     * @param sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to Sort.name)
+     * @param order Defaults to asc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @return RequestConfig
      */
-    fun listTemplatesRequestConfig() : RequestConfig<Unit> {
+    fun listTemplatesRequestConfig(sort: SortListTemplates?, order: OrderListTemplates?) : RequestConfig<Unit> {
         val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, kotlin.collections.List<kotlin.String>>()
+            .apply {
+                if (sort != null) {
+                    put("sort", listOf(sort.value))
+                }
+                if (order != null) {
+                    put("order", listOf(order.value))
+                }
+            }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "application/json, application/problem+json"
 

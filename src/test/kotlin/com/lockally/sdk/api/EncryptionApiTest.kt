@@ -32,6 +32,7 @@ import com.lockally.sdk.model.CreateEncryptionKey201Response
 import com.lockally.sdk.model.CreateEncryptionKeyRequest
 import com.lockally.sdk.model.CreateEncryptionRecoveryRequest
 import com.lockally.sdk.model.GetEncryptionKey200Response
+import com.lockally.sdk.model.GetEncryptionStatus200Response
 import com.lockally.sdk.model.Problem
 import com.lockally.sdk.model.RotateEncryptionKeyRequest
 
@@ -68,6 +69,13 @@ class EncryptionApiTest : ShouldSpec() {
             // uncomment below to test getEncryptionKey
             //val email : kotlin.String = email_example // kotlin.String | 
             //val result : GetEncryptionKey200Response = apiInstance.getEncryptionKey(email)
+            //result shouldBe ("TODO")
+        }
+
+        // to test getEncryptionStatus
+        should("test getEncryptionStatus") {
+            // uncomment below to test getEncryptionStatus
+            //val result : GetEncryptionStatus200Response = apiInstance.getEncryptionStatus()
             //result shouldBe ("TODO")
         }
 

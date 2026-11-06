@@ -33,16 +33,16 @@ class RotateEncryptionKeyRequestTest : ShouldSpec() {
         // uncomment below to create an instance of RotateEncryptionKeyRequest
         //val modelInstance = RotateEncryptionKeyRequest()
 
-        // to test the property `mailboxEmail`
-        should("test mailboxEmail") {
-            // uncomment below to test the property
-            //modelInstance.mailboxEmail shouldBe ("TODO")
-        }
-
         // to test the property `encryptedPrivateKey`
         should("test encryptedPrivateKey") {
             // uncomment below to test the property
             //modelInstance.encryptedPrivateKey shouldBe ("TODO")
+        }
+
+        // to test the property `mailboxEmail`
+        should("test mailboxEmail") {
+            // uncomment below to test the property
+            //modelInstance.mailboxEmail shouldBe ("TODO")
         }
 
         // to test the property `kdfParams`

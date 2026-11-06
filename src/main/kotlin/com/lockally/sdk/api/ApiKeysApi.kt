@@ -27,10 +27,13 @@ import java.io.IOException
 import okhttp3.Call
 import okhttp3.HttpUrl
 
+import com.lockally.sdk.model.APIKey
 import com.lockally.sdk.model.CreateApiKey201Response
 import com.lockally.sdk.model.CreateApiKeyRequest
 import com.lockally.sdk.model.ListApiKeys200Response
 import com.lockally.sdk.model.Problem
+import com.lockally.sdk.model.RotateApiKeyRequest
+import com.lockally.sdk.model.UpdateApiKeyRequest
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -135,9 +138,47 @@ open class ApiKeysApi(basePath: kotlin.String = defaultBasePath, client: Call.Fa
     }
 
     /**
+     * enum for parameter sort
+     */
+     enum class SortListApiKeys(val value: kotlin.String) {
+         @SerialName(value = "label") label("label"),
+         @SerialName(value = "created_at") created_at("created_at"),
+         @SerialName(value = "last_used_at") last_used_at("last_used_at"),
+         @SerialName(value = "expires_at") expires_at("expires_at");
+
+        /**
+         * Override [toString()] to avoid using the enum variable name as the value, and instead use
+         * the actual value defined in the API spec file.
+         *
+         * This solves a problem when the variable name and its value are different, and ensures that
+         * the client sends the correct enum values to the server always.
+         */
+        override fun toString(): kotlin.String = "$value"
+     }
+
+    /**
+     * enum for parameter order
+     */
+     enum class OrderListApiKeys(val value: kotlin.String) {
+         @SerialName(value = "asc") asc("asc"),
+         @SerialName(value = "desc") desc("desc");
+
+        /**
+         * Override [toString()] to avoid using the enum variable name as the value, and instead use
+         * the actual value defined in the API spec file.
+         *
+         * This solves a problem when the variable name and its value are different, and ensures that
+         * the client sends the correct enum values to the server always.
+         */
+        override fun toString(): kotlin.String = "$value"
+     }
+
+    /**
      * GET /v1/api-keys
      * List API keys
      * Returns all API keys (active and revoked) belonging to the calling tenant. The &#x60;secret&#x60; is **never** returned, only prefix + metadata. 
+     * @param sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to Sort.created_at)
+     * @param order Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @return ListApiKeys200Response
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
@@ -147,8 +188,8 @@ open class ApiKeysApi(basePath: kotlin.String = defaultBasePath, client: Call.Fa
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listApiKeys() : ListApiKeys200Response = withContext(Dispatchers.IO) {
-        val localVarResponse = listApiKeysWithHttpInfo()
+    suspend fun listApiKeys(sort: SortListApiKeys? = SortListApiKeys.created_at, order: OrderListApiKeys? = null) : ListApiKeys200Response = withContext(Dispatchers.IO) {
+        val localVarResponse = listApiKeysWithHttpInfo(sort = sort, order = order)
 
         return@withContext when (localVarResponse.responseType) {
             ResponseType.Success -> (localVarResponse as Success<*>).data as ListApiKeys200Response
@@ -169,14 +210,16 @@ open class ApiKeysApi(basePath: kotlin.String = defaultBasePath, client: Call.Fa
      * GET /v1/api-keys
      * List API keys
      * Returns all API keys (active and revoked) belonging to the calling tenant. The &#x60;secret&#x60; is **never** returned, only prefix + metadata. 
+     * @param sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to Sort.created_at)
+     * @param order Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @return ApiResponse<ListApiKeys200Response?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    suspend fun listApiKeysWithHttpInfo() : ApiResponse<ListApiKeys200Response?> = withContext(Dispatchers.IO) {
-        val localVariableConfig = listApiKeysRequestConfig()
+    suspend fun listApiKeysWithHttpInfo(sort: SortListApiKeys?, order: OrderListApiKeys?) : ApiResponse<ListApiKeys200Response?> = withContext(Dispatchers.IO) {
+        val localVariableConfig = listApiKeysRequestConfig(sort = sort, order = order)
 
         return@withContext request<Unit, ListApiKeys200Response>(
             localVariableConfig
@@ -186,11 +229,21 @@ open class ApiKeysApi(basePath: kotlin.String = defaultBasePath, client: Call.Fa
     /**
      * To obtain the request config of the operation listApiKeys
      *
+     * @param sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to Sort.created_at)
+     * @param order Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @return RequestConfig
      */
-    fun listApiKeysRequestConfig() : RequestConfig<Unit> {
+    fun listApiKeysRequestConfig(sort: SortListApiKeys?, order: OrderListApiKeys?) : RequestConfig<Unit> {
         val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, kotlin.collections.List<kotlin.String>>()
+            .apply {
+                if (sort != null) {
+                    put("sort", listOf(sort.value))
+                }
+                if (order != null) {
+                    put("order", listOf(order.value))
+                }
+            }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "application/json, application/problem+json"
 
@@ -267,6 +320,160 @@ open class ApiKeysApi(basePath: kotlin.String = defaultBasePath, client: Call.Fa
 
         return RequestConfig(
             method = RequestMethod.DELETE,
+            path = "/v1/api-keys/{id}".replace("{"+"id"+"}", encodeURIComponent(id.toString())),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
+            body = localVariableBody
+        )
+    }
+
+    /**
+     * POST /v1/api-keys/{id}/rotate
+     * Rotate an API key
+     * Issues a successor key and puts a short expiry on this one, so **both work until the overlap ends**. That window is the point: without it, rotation is revocation with extra steps and every caller has to swap credentials in the same instant.  The successor inherits this key&#39;s scopes, its label (the label names the integration, and the integration has not changed) and its test flag. Its full &#x60;secret&#x60; is in this response and nowhere else.  The response&#39;s &#x60;expires_at&#x60; is the **predecessor&#39;s** deadline, so you can see from the rotation itself how long you have to cut over.  A key that has already been rotated cannot be rotated again: chaining overlaps would leave several live keys for one integration, which is the opposite of the intent. Rotate the successor instead. 
+     * @param id 
+     * @param rotateApiKeyRequest  (optional)
+     * @return CreateApiKey201Response
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun rotateApiKey(id: java.util.UUID, rotateApiKeyRequest: RotateApiKeyRequest? = null) : CreateApiKey201Response = withContext(Dispatchers.IO) {
+        val localVarResponse = rotateApiKeyWithHttpInfo(id = id, rotateApiKeyRequest = rotateApiKeyRequest)
+
+        return@withContext when (localVarResponse.responseType) {
+            ResponseType.Success -> (localVarResponse as Success<*>).data as CreateApiKey201Response
+            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
+            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
+            ResponseType.ClientError -> {
+                val localVarError = localVarResponse as ClientError<*>
+                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+            }
+            ResponseType.ServerError -> {
+                val localVarError = localVarResponse as ServerError<*>
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
+            }
+        }
+    }
+
+    /**
+     * POST /v1/api-keys/{id}/rotate
+     * Rotate an API key
+     * Issues a successor key and puts a short expiry on this one, so **both work until the overlap ends**. That window is the point: without it, rotation is revocation with extra steps and every caller has to swap credentials in the same instant.  The successor inherits this key&#39;s scopes, its label (the label names the integration, and the integration has not changed) and its test flag. Its full &#x60;secret&#x60; is in this response and nowhere else.  The response&#39;s &#x60;expires_at&#x60; is the **predecessor&#39;s** deadline, so you can see from the rotation itself how long you have to cut over.  A key that has already been rotated cannot be rotated again: chaining overlaps would leave several live keys for one integration, which is the opposite of the intent. Rotate the successor instead. 
+     * @param id 
+     * @param rotateApiKeyRequest  (optional)
+     * @return ApiResponse<CreateApiKey201Response?>
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class)
+    suspend fun rotateApiKeyWithHttpInfo(id: java.util.UUID, rotateApiKeyRequest: RotateApiKeyRequest?) : ApiResponse<CreateApiKey201Response?> = withContext(Dispatchers.IO) {
+        val localVariableConfig = rotateApiKeyRequestConfig(id = id, rotateApiKeyRequest = rotateApiKeyRequest)
+
+        return@withContext request<RotateApiKeyRequest, CreateApiKey201Response>(
+            localVariableConfig
+        )
+    }
+
+    /**
+     * To obtain the request config of the operation rotateApiKey
+     *
+     * @param id 
+     * @param rotateApiKeyRequest  (optional)
+     * @return RequestConfig
+     */
+    fun rotateApiKeyRequestConfig(id: java.util.UUID, rotateApiKeyRequest: RotateApiKeyRequest?) : RequestConfig<RotateApiKeyRequest> {
+        val localVariableBody = rotateApiKeyRequest
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Content-Type"] = "application/json"
+        localVariableHeaders["Accept"] = "application/json, application/problem+json"
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/v1/api-keys/{id}/rotate".replace("{"+"id"+"}", encodeURIComponent(id.toString())),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
+            body = localVariableBody
+        )
+    }
+
+    /**
+     * PATCH /v1/api-keys/{id}
+     * Update an API key
+     * Changes a key&#39;s label, scopes or expiry in place, without reissuing the secret.  **Every field is optional and absent means unchanged.** Renaming a key does not clear its expiry. For &#x60;expires_at&#x60; there are three distinct requests: omit the field to leave the expiry alone, send a timestamp to set one, and send an explicit &#x60;null&#x60; to remove one.  Scopes are replaced wholesale, not merged. This endpoint does not restrict which scopes you may grant, because &#x60;POST /v1/api-keys&#x60; never has either: a key with &#x60;tenant:admin&#x60; can already mint a key with any scope, so &#x60;tenant:admin&#x60; is root-equivalent for key management.  A revoked key cannot be updated. 
+     * @param id 
+     * @param updateApiKeyRequest 
+     * @return APIKey
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun updateApiKey(id: java.util.UUID, updateApiKeyRequest: UpdateApiKeyRequest) : APIKey = withContext(Dispatchers.IO) {
+        val localVarResponse = updateApiKeyWithHttpInfo(id = id, updateApiKeyRequest = updateApiKeyRequest)
+
+        return@withContext when (localVarResponse.responseType) {
+            ResponseType.Success -> (localVarResponse as Success<*>).data as APIKey
+            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
+            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
+            ResponseType.ClientError -> {
+                val localVarError = localVarResponse as ClientError<*>
+                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+            }
+            ResponseType.ServerError -> {
+                val localVarError = localVarResponse as ServerError<*>
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
+            }
+        }
+    }
+
+    /**
+     * PATCH /v1/api-keys/{id}
+     * Update an API key
+     * Changes a key&#39;s label, scopes or expiry in place, without reissuing the secret.  **Every field is optional and absent means unchanged.** Renaming a key does not clear its expiry. For &#x60;expires_at&#x60; there are three distinct requests: omit the field to leave the expiry alone, send a timestamp to set one, and send an explicit &#x60;null&#x60; to remove one.  Scopes are replaced wholesale, not merged. This endpoint does not restrict which scopes you may grant, because &#x60;POST /v1/api-keys&#x60; never has either: a key with &#x60;tenant:admin&#x60; can already mint a key with any scope, so &#x60;tenant:admin&#x60; is root-equivalent for key management.  A revoked key cannot be updated. 
+     * @param id 
+     * @param updateApiKeyRequest 
+     * @return ApiResponse<APIKey?>
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class)
+    suspend fun updateApiKeyWithHttpInfo(id: java.util.UUID, updateApiKeyRequest: UpdateApiKeyRequest) : ApiResponse<APIKey?> = withContext(Dispatchers.IO) {
+        val localVariableConfig = updateApiKeyRequestConfig(id = id, updateApiKeyRequest = updateApiKeyRequest)
+
+        return@withContext request<UpdateApiKeyRequest, APIKey>(
+            localVariableConfig
+        )
+    }
+
+    /**
+     * To obtain the request config of the operation updateApiKey
+     *
+     * @param id 
+     * @param updateApiKeyRequest 
+     * @return RequestConfig
+     */
+    fun updateApiKeyRequestConfig(id: java.util.UUID, updateApiKeyRequest: UpdateApiKeyRequest) : RequestConfig<UpdateApiKeyRequest> {
+        val localVariableBody = updateApiKeyRequest
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Content-Type"] = "application/json"
+        localVariableHeaders["Accept"] = "application/json, application/problem+json"
+
+        return RequestConfig(
+            method = RequestMethod.PATCH,
             path = "/v1/api-keys/{id}".replace("{"+"id"+"}", encodeURIComponent(id.toString())),
             query = localVariableQuery,
             headers = localVariableHeaders,

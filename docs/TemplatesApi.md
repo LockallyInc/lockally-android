@@ -168,7 +168,7 @@ apiInstance.accessTokenProvider = { "" }
 
 <a id="listTemplates"></a>
 # **listTemplates**
-> ListTemplates200Response listTemplates()
+> ListTemplates200Response listTemplates(sort, order)
 
 List templates
 
@@ -179,8 +179,10 @@ List templates
 //import com.lockally.sdk.model.*
 
 val apiInstance = TemplatesApi()
+val sort : kotlin.String = sort_example // kotlin.String | Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index.
+val order : kotlin.String = order_example // kotlin.String | Defaults to asc for the default field and asc for any other. Always tie-broken on id, so the order is total.
 try {
-    val result : ListTemplates200Response = apiInstance.listTemplates()
+    val result : ListTemplates200Response = apiInstance.listTemplates(sort, order)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TemplatesApi#listTemplates")
@@ -192,7 +194,10 @@ try {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+| **sort** | **kotlin.String**| Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. | [optional] [default to Sort.name] [enum: name, created_at, updated_at] |
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **order** | **kotlin.String**| Defaults to asc for the default field and asc for any other. Always tie-broken on id, so the order is total. | [optional] [enum: asc, desc] |
 
 ### Return type
 

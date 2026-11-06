@@ -81,7 +81,7 @@ apiInstance.accessTokenProvider = { "" }
 
 <a id="checkMigrationDNS"></a>
 # **checkMigrationDNS**
-> kotlin.Any checkMigrationDNS(id)
+> MigrationDNSCheck checkMigrationDNS(id)
 
 Check DNS readiness for cutover
 
@@ -94,7 +94,7 @@ Check DNS readiness for cutover
 val apiInstance = MigrationsApi()
 val id : java.util.UUID = 38400000-8cf0-11bd-b23e-10b96e4ef00d // java.util.UUID | 
 try {
-    val result : kotlin.Any = apiInstance.checkMigrationDNS(id)
+    val result : MigrationDNSCheck = apiInstance.checkMigrationDNS(id)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MigrationsApi#checkMigrationDNS")
@@ -112,7 +112,7 @@ try {
 
 ### Return type
 
-[**kotlin.Any**](kotlin.Any.md)
+[**MigrationDNSCheck**](MigrationDNSCheck.md)
 
 ### Authorization
 

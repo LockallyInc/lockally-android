@@ -27,10 +27,13 @@ import io.kotlintest.shouldBe
 import io.kotlintest.specs.ShouldSpec
 
 import com.lockally.sdk.api.ApiKeysApi
+import com.lockally.sdk.model.APIKey
 import com.lockally.sdk.model.CreateApiKey201Response
 import com.lockally.sdk.model.CreateApiKeyRequest
 import com.lockally.sdk.model.ListApiKeys200Response
 import com.lockally.sdk.model.Problem
+import com.lockally.sdk.model.RotateApiKeyRequest
+import com.lockally.sdk.model.UpdateApiKeyRequest
 
 class ApiKeysApiTest : ShouldSpec() {
     init {
@@ -48,7 +51,9 @@ class ApiKeysApiTest : ShouldSpec() {
         // to test listApiKeys
         should("test listApiKeys") {
             // uncomment below to test listApiKeys
-            //val result : ListApiKeys200Response = apiInstance.listApiKeys()
+            //val sort : kotlin.String = sort_example // kotlin.String | Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index.
+            //val order : kotlin.String = order_example // kotlin.String | Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total.
+            //val result : ListApiKeys200Response = apiInstance.listApiKeys(sort, order)
             //result shouldBe ("TODO")
         }
 
@@ -57,6 +62,24 @@ class ApiKeysApiTest : ShouldSpec() {
             // uncomment below to test revokeApiKey
             //val id : java.util.UUID = 38400000-8cf0-11bd-b23e-10b96e4ef00d // java.util.UUID | 
             //apiInstance.revokeApiKey(id)
+        }
+
+        // to test rotateApiKey
+        should("test rotateApiKey") {
+            // uncomment below to test rotateApiKey
+            //val id : java.util.UUID = 38400000-8cf0-11bd-b23e-10b96e4ef00d // java.util.UUID | 
+            //val rotateApiKeyRequest : RotateApiKeyRequest =  // RotateApiKeyRequest | 
+            //val result : CreateApiKey201Response = apiInstance.rotateApiKey(id, rotateApiKeyRequest)
+            //result shouldBe ("TODO")
+        }
+
+        // to test updateApiKey
+        should("test updateApiKey") {
+            // uncomment below to test updateApiKey
+            //val id : java.util.UUID = 38400000-8cf0-11bd-b23e-10b96e4ef00d // java.util.UUID | 
+            //val updateApiKeyRequest : UpdateApiKeyRequest =  // UpdateApiKeyRequest | 
+            //val result : APIKey = apiInstance.updateApiKey(id, updateApiKeyRequest)
+            //result shouldBe ("TODO")
         }
 
     }

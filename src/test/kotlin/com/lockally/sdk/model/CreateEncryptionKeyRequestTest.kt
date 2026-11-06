@@ -33,12 +33,6 @@ class CreateEncryptionKeyRequestTest : ShouldSpec() {
         // uncomment below to create an instance of CreateEncryptionKeyRequest
         //val modelInstance = CreateEncryptionKeyRequest()
 
-        // to test the property `mailboxEmail`
-        should("test mailboxEmail") {
-            // uncomment below to test the property
-            //modelInstance.mailboxEmail shouldBe ("TODO")
-        }
-
         // to test the property `publicKey`
         should("test publicKey") {
             // uncomment below to test the property
@@ -49,6 +43,12 @@ class CreateEncryptionKeyRequestTest : ShouldSpec() {
         should("test encryptedPrivateKey") {
             // uncomment below to test the property
             //modelInstance.encryptedPrivateKey shouldBe ("TODO")
+        }
+
+        // to test the property `mailboxEmail`
+        should("test mailboxEmail") {
+            // uncomment below to test the property
+            //modelInstance.mailboxEmail shouldBe ("TODO")
         }
 
         // to test the property `kdfParams`

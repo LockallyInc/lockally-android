@@ -87,7 +87,9 @@ class DomainsApiTest : ShouldSpec() {
         // to test listDomains
         should("test listDomains") {
             // uncomment below to test listDomains
-            //val result : ListDomains200Response = apiInstance.listDomains()
+            //val sort : kotlin.String = sort_example // kotlin.String | Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index.
+            //val order : kotlin.String = order_example // kotlin.String | Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total.
+            //val result : ListDomains200Response = apiInstance.listDomains(sort, order)
             //result shouldBe ("TODO")
         }
 

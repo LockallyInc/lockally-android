@@ -30,6 +30,8 @@ import okhttp3.HttpUrl
 import com.lockally.sdk.model.GetUsage200Response
 import com.lockally.sdk.model.Problem
 import com.lockally.sdk.model.Tenant
+import com.lockally.sdk.model.TrackingPolicy
+import com.lockally.sdk.model.UpdateTrackingPolicyRequest
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -130,6 +132,76 @@ open class TenantApi(basePath: kotlin.String = defaultBasePath, client: Call.Fac
     }
 
     /**
+     * GET /v1/tracking
+     * Get the engagement tracking policy
+     * Whether open and click tracking are enabled for this account. **Both are off until switched on**, and an account that has never set a policy reads as off rather than as an error.  &#x60;configured&#x60; reports whether this deployment holds a signing secret. Without one no tracking token can be minted or verified, so tracking cannot work however the flags are set, and a caller seeing &#x60;track_opens: true&#x60; with nothing arriving deserves to know why. 
+     * @return TrackingPolicy
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getTrackingPolicy() : TrackingPolicy = withContext(Dispatchers.IO) {
+        val localVarResponse = getTrackingPolicyWithHttpInfo()
+
+        return@withContext when (localVarResponse.responseType) {
+            ResponseType.Success -> (localVarResponse as Success<*>).data as TrackingPolicy
+            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
+            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
+            ResponseType.ClientError -> {
+                val localVarError = localVarResponse as ClientError<*>
+                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+            }
+            ResponseType.ServerError -> {
+                val localVarError = localVarResponse as ServerError<*>
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
+            }
+        }
+    }
+
+    /**
+     * GET /v1/tracking
+     * Get the engagement tracking policy
+     * Whether open and click tracking are enabled for this account. **Both are off until switched on**, and an account that has never set a policy reads as off rather than as an error.  &#x60;configured&#x60; reports whether this deployment holds a signing secret. Without one no tracking token can be minted or verified, so tracking cannot work however the flags are set, and a caller seeing &#x60;track_opens: true&#x60; with nothing arriving deserves to know why. 
+     * @return ApiResponse<TrackingPolicy?>
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class)
+    suspend fun getTrackingPolicyWithHttpInfo() : ApiResponse<TrackingPolicy?> = withContext(Dispatchers.IO) {
+        val localVariableConfig = getTrackingPolicyRequestConfig()
+
+        return@withContext request<Unit, TrackingPolicy>(
+            localVariableConfig
+        )
+    }
+
+    /**
+     * To obtain the request config of the operation getTrackingPolicy
+     *
+     * @return RequestConfig
+     */
+    fun getTrackingPolicyRequestConfig() : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "application/json, application/problem+json"
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/v1/tracking",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
+            body = localVariableBody
+        )
+    }
+
+    /**
      * GET /v1/usage
      * Usage snapshot
      * Returns the tenant&#39;s current usage + cap consumption. Designed for poll-based alerting on the integrator side (e.g. \&quot;warn when daily quota is 80% used\&quot;). Computed live on request, so there is no cache, so callers should poll at most once per minute. 
@@ -192,6 +264,80 @@ open class TenantApi(basePath: kotlin.String = defaultBasePath, client: Call.Fac
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/v1/usage",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
+            body = localVariableBody
+        )
+    }
+
+    /**
+     * PUT /v1/tracking
+     * Update the engagement tracking policy
+     * Enables or disables tracking for the account. Send either flag or both; an omitted flag is left unchanged rather than reset.  **Enabling this changes what Lockally collects about your recipients**, who have no relationship with us. You are the controller for them. What is collected is a user-agent string, a timestamp, and for a click the destination URL: **no IP address**, ever. The change is written to your audit log. 
+     * @param updateTrackingPolicyRequest 
+     * @return TrackingPolicy
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun updateTrackingPolicy(updateTrackingPolicyRequest: UpdateTrackingPolicyRequest) : TrackingPolicy = withContext(Dispatchers.IO) {
+        val localVarResponse = updateTrackingPolicyWithHttpInfo(updateTrackingPolicyRequest = updateTrackingPolicyRequest)
+
+        return@withContext when (localVarResponse.responseType) {
+            ResponseType.Success -> (localVarResponse as Success<*>).data as TrackingPolicy
+            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
+            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
+            ResponseType.ClientError -> {
+                val localVarError = localVarResponse as ClientError<*>
+                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+            }
+            ResponseType.ServerError -> {
+                val localVarError = localVarResponse as ServerError<*>
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
+            }
+        }
+    }
+
+    /**
+     * PUT /v1/tracking
+     * Update the engagement tracking policy
+     * Enables or disables tracking for the account. Send either flag or both; an omitted flag is left unchanged rather than reset.  **Enabling this changes what Lockally collects about your recipients**, who have no relationship with us. You are the controller for them. What is collected is a user-agent string, a timestamp, and for a click the destination URL: **no IP address**, ever. The change is written to your audit log. 
+     * @param updateTrackingPolicyRequest 
+     * @return ApiResponse<TrackingPolicy?>
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class)
+    suspend fun updateTrackingPolicyWithHttpInfo(updateTrackingPolicyRequest: UpdateTrackingPolicyRequest) : ApiResponse<TrackingPolicy?> = withContext(Dispatchers.IO) {
+        val localVariableConfig = updateTrackingPolicyRequestConfig(updateTrackingPolicyRequest = updateTrackingPolicyRequest)
+
+        return@withContext request<UpdateTrackingPolicyRequest, TrackingPolicy>(
+            localVariableConfig
+        )
+    }
+
+    /**
+     * To obtain the request config of the operation updateTrackingPolicy
+     *
+     * @param updateTrackingPolicyRequest 
+     * @return RequestConfig
+     */
+    fun updateTrackingPolicyRequestConfig(updateTrackingPolicyRequest: UpdateTrackingPolicyRequest) : RequestConfig<UpdateTrackingPolicyRequest> {
+        val localVariableBody = updateTrackingPolicyRequest
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Content-Type"] = "application/json"
+        localVariableHeaders["Accept"] = "application/json, application/problem+json"
+
+        return RequestConfig(
+            method = RequestMethod.PUT,
+            path = "/v1/tracking",
             query = localVariableQuery,
             headers = localVariableHeaders,
             requiresAuthentication = true,

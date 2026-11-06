@@ -27,8 +27,11 @@ import java.io.IOException
 import okhttp3.Call
 import okhttp3.HttpUrl
 
+import com.lockally.sdk.model.BulkUpsertExternalContacts200Response
+import com.lockally.sdk.model.BulkUpsertExternalContactsRequest
 import com.lockally.sdk.model.Contact
 import com.lockally.sdk.model.CreateContactRequest
+import com.lockally.sdk.model.ExternalContactInput
 import com.lockally.sdk.model.GetContactLists200Response
 import com.lockally.sdk.model.ListContacts200Response
 import com.lockally.sdk.model.Problem
@@ -60,6 +63,83 @@ open class ContactsApi(basePath: kotlin.String = defaultBasePath, client: Call.F
         val defaultBasePath: String by lazy {
             System.getProperties().getProperty(ApiClient.BASE_URL_KEY, "https://api.lockally.com")
         }
+    }
+
+    /**
+     * PUT /v1/contacts/external/{system}
+     * Create or update up to 500 contacts by their ids in another system
+     * For a sync. Each row stands alone: a bad row is reported in &#x60;results&#x60; with its index and the rest are stored, so the response is 200 whenever the request itself is well formed. Read &#x60;failed&#x60; and &#x60;results&#x60;. Two rows with the same &#x60;external_id&#x60; in one request are refused (the later one), because which is current cannot be known. Rerunning the same payload updates rather than duplicates.
+     * @param system 
+     * @param bulkUpsertExternalContactsRequest 
+     * @return BulkUpsertExternalContacts200Response
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun bulkUpsertExternalContacts(system: kotlin.String, bulkUpsertExternalContactsRequest: BulkUpsertExternalContactsRequest) : BulkUpsertExternalContacts200Response = withContext(Dispatchers.IO) {
+        val localVarResponse = bulkUpsertExternalContactsWithHttpInfo(system = system, bulkUpsertExternalContactsRequest = bulkUpsertExternalContactsRequest)
+
+        return@withContext when (localVarResponse.responseType) {
+            ResponseType.Success -> (localVarResponse as Success<*>).data as BulkUpsertExternalContacts200Response
+            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
+            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
+            ResponseType.ClientError -> {
+                val localVarError = localVarResponse as ClientError<*>
+                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+            }
+            ResponseType.ServerError -> {
+                val localVarError = localVarResponse as ServerError<*>
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
+            }
+        }
+    }
+
+    /**
+     * PUT /v1/contacts/external/{system}
+     * Create or update up to 500 contacts by their ids in another system
+     * For a sync. Each row stands alone: a bad row is reported in &#x60;results&#x60; with its index and the rest are stored, so the response is 200 whenever the request itself is well formed. Read &#x60;failed&#x60; and &#x60;results&#x60;. Two rows with the same &#x60;external_id&#x60; in one request are refused (the later one), because which is current cannot be known. Rerunning the same payload updates rather than duplicates.
+     * @param system 
+     * @param bulkUpsertExternalContactsRequest 
+     * @return ApiResponse<BulkUpsertExternalContacts200Response?>
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class)
+    suspend fun bulkUpsertExternalContactsWithHttpInfo(system: kotlin.String, bulkUpsertExternalContactsRequest: BulkUpsertExternalContactsRequest) : ApiResponse<BulkUpsertExternalContacts200Response?> = withContext(Dispatchers.IO) {
+        val localVariableConfig = bulkUpsertExternalContactsRequestConfig(system = system, bulkUpsertExternalContactsRequest = bulkUpsertExternalContactsRequest)
+
+        return@withContext request<BulkUpsertExternalContactsRequest, BulkUpsertExternalContacts200Response>(
+            localVariableConfig
+        )
+    }
+
+    /**
+     * To obtain the request config of the operation bulkUpsertExternalContacts
+     *
+     * @param system 
+     * @param bulkUpsertExternalContactsRequest 
+     * @return RequestConfig
+     */
+    fun bulkUpsertExternalContactsRequestConfig(system: kotlin.String, bulkUpsertExternalContactsRequest: BulkUpsertExternalContactsRequest) : RequestConfig<BulkUpsertExternalContactsRequest> {
+        val localVariableBody = bulkUpsertExternalContactsRequest
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Content-Type"] = "application/json"
+        localVariableHeaders["Accept"] = "application/json, application/problem+json"
+
+        return RequestConfig(
+            method = RequestMethod.PUT,
+            path = "/v1/contacts/external/{system}".replace("{"+"system"+"}", encodeURIComponent(system.toString())),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
+            body = localVariableBody
+        )
     }
 
     /**
@@ -208,6 +288,80 @@ open class ContactsApi(basePath: kotlin.String = defaultBasePath, client: Call.F
     }
 
     /**
+     * DELETE /v1/contacts/external/{system}/{external_id}
+     * Delete a contact by its id in another system
+     * 
+     * @param system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded).
+     * @param externalId The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it.
+     * @return void
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun deleteExternalContact(system: kotlin.String, externalId: kotlin.String) : Unit = withContext(Dispatchers.IO) {
+        val localVarResponse = deleteExternalContactWithHttpInfo(system = system, externalId = externalId)
+
+        return@withContext when (localVarResponse.responseType) {
+            ResponseType.Success -> Unit
+            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
+            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
+            ResponseType.ClientError -> {
+                val localVarError = localVarResponse as ClientError<*>
+                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+            }
+            ResponseType.ServerError -> {
+                val localVarError = localVarResponse as ServerError<*>
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
+            }
+        }
+    }
+
+    /**
+     * DELETE /v1/contacts/external/{system}/{external_id}
+     * Delete a contact by its id in another system
+     * 
+     * @param system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded).
+     * @param externalId The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it.
+     * @return ApiResponse<Unit?>
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     */
+    @Throws(IllegalStateException::class, IOException::class)
+    suspend fun deleteExternalContactWithHttpInfo(system: kotlin.String, externalId: kotlin.String) : ApiResponse<Unit?> = withContext(Dispatchers.IO) {
+        val localVariableConfig = deleteExternalContactRequestConfig(system = system, externalId = externalId)
+
+        return@withContext request<Unit, Unit>(
+            localVariableConfig
+        )
+    }
+
+    /**
+     * To obtain the request config of the operation deleteExternalContact
+     *
+     * @param system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded).
+     * @param externalId The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it.
+     * @return RequestConfig
+     */
+    fun deleteExternalContactRequestConfig(system: kotlin.String, externalId: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "application/problem+json"
+
+        return RequestConfig(
+            method = RequestMethod.DELETE,
+            path = "/v1/contacts/external/{system}/{external_id}".replace("{"+"system"+"}", encodeURIComponent(system.toString())).replace("{"+"external_id"+"}", encodeURIComponent(externalId.toString())),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
+            body = localVariableBody
+        )
+    }
+
+    /**
      * GET /v1/contacts/{id}
      * Get a contact
      * 
@@ -346,6 +500,82 @@ open class ContactsApi(basePath: kotlin.String = defaultBasePath, client: Call.F
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/v1/contacts/{id}/lists".replace("{"+"id"+"}", encodeURIComponent(id.toString())),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
+            body = localVariableBody
+        )
+    }
+
+    /**
+     * GET /v1/contacts/external/{system}/{external_id}
+     * Get a contact by its id in another system
+     * 
+     * @param system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded).
+     * @param externalId The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it.
+     * @return Contact
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getExternalContact(system: kotlin.String, externalId: kotlin.String) : Contact = withContext(Dispatchers.IO) {
+        val localVarResponse = getExternalContactWithHttpInfo(system = system, externalId = externalId)
+
+        return@withContext when (localVarResponse.responseType) {
+            ResponseType.Success -> (localVarResponse as Success<*>).data as Contact
+            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
+            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
+            ResponseType.ClientError -> {
+                val localVarError = localVarResponse as ClientError<*>
+                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+            }
+            ResponseType.ServerError -> {
+                val localVarError = localVarResponse as ServerError<*>
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
+            }
+        }
+    }
+
+    /**
+     * GET /v1/contacts/external/{system}/{external_id}
+     * Get a contact by its id in another system
+     * 
+     * @param system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded).
+     * @param externalId The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it.
+     * @return ApiResponse<Contact?>
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class)
+    suspend fun getExternalContactWithHttpInfo(system: kotlin.String, externalId: kotlin.String) : ApiResponse<Contact?> = withContext(Dispatchers.IO) {
+        val localVariableConfig = getExternalContactRequestConfig(system = system, externalId = externalId)
+
+        return@withContext request<Unit, Contact>(
+            localVariableConfig
+        )
+    }
+
+    /**
+     * To obtain the request config of the operation getExternalContact
+     *
+     * @param system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded).
+     * @param externalId The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it.
+     * @return RequestConfig
+     */
+    fun getExternalContactRequestConfig(system: kotlin.String, externalId: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "application/json, application/problem+json"
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/v1/contacts/external/{system}/{external_id}".replace("{"+"system"+"}", encodeURIComponent(system.toString())).replace("{"+"external_id"+"}", encodeURIComponent(externalId.toString())),
             query = localVariableQuery,
             headers = localVariableHeaders,
             requiresAuthentication = true,
@@ -525,6 +755,86 @@ open class ContactsApi(basePath: kotlin.String = defaultBasePath, client: Call.F
         return RequestConfig(
             method = RequestMethod.PATCH,
             path = "/v1/contacts/{id}".replace("{"+"id"+"}", encodeURIComponent(id.toString())),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
+            body = localVariableBody
+        )
+    }
+
+    /**
+     * PUT /v1/contacts/external/{system}/{external_id}
+     * Create or update a contact by its id in another system
+     * Idempotent: the path is the identity, so sending the same request twice cannot create a second contact, and you never need to store our id. Returns 201 when the contact was created and 200 when it already existed. The body is the full representation: a field you leave out is cleared. Email is an ordinary attribute, not a key, so changing it updates the same contact. &#x60;mailboxes:write&#x60; is also accepted.
+     * @param system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded).
+     * @param externalId The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it.
+     * @param externalContactInput 
+     * @return Contact
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun upsertExternalContact(system: kotlin.String, externalId: kotlin.String, externalContactInput: ExternalContactInput) : Contact = withContext(Dispatchers.IO) {
+        val localVarResponse = upsertExternalContactWithHttpInfo(system = system, externalId = externalId, externalContactInput = externalContactInput)
+
+        return@withContext when (localVarResponse.responseType) {
+            ResponseType.Success -> (localVarResponse as Success<*>).data as Contact
+            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
+            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
+            ResponseType.ClientError -> {
+                val localVarError = localVarResponse as ClientError<*>
+                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+            }
+            ResponseType.ServerError -> {
+                val localVarError = localVarResponse as ServerError<*>
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
+            }
+        }
+    }
+
+    /**
+     * PUT /v1/contacts/external/{system}/{external_id}
+     * Create or update a contact by its id in another system
+     * Idempotent: the path is the identity, so sending the same request twice cannot create a second contact, and you never need to store our id. Returns 201 when the contact was created and 200 when it already existed. The body is the full representation: a field you leave out is cleared. Email is an ordinary attribute, not a key, so changing it updates the same contact. &#x60;mailboxes:write&#x60; is also accepted.
+     * @param system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded).
+     * @param externalId The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it.
+     * @param externalContactInput 
+     * @return ApiResponse<Contact?>
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class)
+    suspend fun upsertExternalContactWithHttpInfo(system: kotlin.String, externalId: kotlin.String, externalContactInput: ExternalContactInput) : ApiResponse<Contact?> = withContext(Dispatchers.IO) {
+        val localVariableConfig = upsertExternalContactRequestConfig(system = system, externalId = externalId, externalContactInput = externalContactInput)
+
+        return@withContext request<ExternalContactInput, Contact>(
+            localVariableConfig
+        )
+    }
+
+    /**
+     * To obtain the request config of the operation upsertExternalContact
+     *
+     * @param system Your label for the system the record comes from, for example &#x60;salesforce&#x60;, &#x60;hubspot&#x60; or &#x60;odoo&#x60;. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded).
+     * @param externalId The record&#39;s id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it.
+     * @param externalContactInput 
+     * @return RequestConfig
+     */
+    fun upsertExternalContactRequestConfig(system: kotlin.String, externalId: kotlin.String, externalContactInput: ExternalContactInput) : RequestConfig<ExternalContactInput> {
+        val localVariableBody = externalContactInput
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Content-Type"] = "application/json"
+        localVariableHeaders["Accept"] = "application/json, application/problem+json"
+
+        return RequestConfig(
+            method = RequestMethod.PUT,
+            path = "/v1/contacts/external/{system}/{external_id}".replace("{"+"system"+"}", encodeURIComponent(system.toString())).replace("{"+"external_id"+"}", encodeURIComponent(externalId.toString())),
             query = localVariableQuery,
             headers = localVariableHeaders,
             requiresAuthentication = true,

@@ -42,6 +42,8 @@ import kotlinx.serialization.Contextual
  * @param subject 
  * @param bounceReason 
  * @param sizeBytes 
+ * @param metadata The sender's own key/value from the send request. Always present; `{}` when none was set.
+ * @param tags Grouping labels, lowercased and deduplicated. Always present; `[]` when none were set.
  */
 @Serializable
 
@@ -79,7 +81,15 @@ data class Message (
     val bounceReason: kotlin.String? = null,
 
     @SerialName(value = "size_bytes")
-    val sizeBytes: kotlin.Int? = null
+    val sizeBytes: kotlin.Int? = null,
+
+    /* The sender's own key/value from the send request. Always present; `{}` when none was set. */
+    @SerialName(value = "metadata")
+    val metadata: kotlin.collections.Map<kotlin.String, kotlin.String>? = null,
+
+    /* Grouping labels, lowercased and deduplicated. Always present; `[]` when none were set. */
+    @SerialName(value = "tags")
+    val tags: kotlin.collections.List<kotlin.String>? = null
 
 ) {
 

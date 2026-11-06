@@ -497,9 +497,46 @@ open class DomainsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fa
     }
 
     /**
+     * enum for parameter sort
+     */
+     enum class SortListDomains(val value: kotlin.String) {
+         @SerialName(value = "domain") domain("domain"),
+         @SerialName(value = "created_at") created_at("created_at"),
+         @SerialName(value = "verified_at") verified_at("verified_at");
+
+        /**
+         * Override [toString()] to avoid using the enum variable name as the value, and instead use
+         * the actual value defined in the API spec file.
+         *
+         * This solves a problem when the variable name and its value are different, and ensures that
+         * the client sends the correct enum values to the server always.
+         */
+        override fun toString(): kotlin.String = "$value"
+     }
+
+    /**
+     * enum for parameter order
+     */
+     enum class OrderListDomains(val value: kotlin.String) {
+         @SerialName(value = "asc") asc("asc"),
+         @SerialName(value = "desc") desc("desc");
+
+        /**
+         * Override [toString()] to avoid using the enum variable name as the value, and instead use
+         * the actual value defined in the API spec file.
+         *
+         * This solves a problem when the variable name and its value are different, and ensures that
+         * the client sends the correct enum values to the server always.
+         */
+        override fun toString(): kotlin.String = "$value"
+     }
+
+    /**
      * GET /v1/domains
      * List domains
      * Returns every domain registered under the calling tenant.
+     * @param sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to Sort.created_at)
+     * @param order Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @return ListDomains200Response
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
@@ -509,8 +546,8 @@ open class DomainsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fa
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listDomains() : ListDomains200Response = withContext(Dispatchers.IO) {
-        val localVarResponse = listDomainsWithHttpInfo()
+    suspend fun listDomains(sort: SortListDomains? = SortListDomains.created_at, order: OrderListDomains? = null) : ListDomains200Response = withContext(Dispatchers.IO) {
+        val localVarResponse = listDomainsWithHttpInfo(sort = sort, order = order)
 
         return@withContext when (localVarResponse.responseType) {
             ResponseType.Success -> (localVarResponse as Success<*>).data as ListDomains200Response
@@ -531,14 +568,16 @@ open class DomainsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fa
      * GET /v1/domains
      * List domains
      * Returns every domain registered under the calling tenant.
+     * @param sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to Sort.created_at)
+     * @param order Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @return ApiResponse<ListDomains200Response?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    suspend fun listDomainsWithHttpInfo() : ApiResponse<ListDomains200Response?> = withContext(Dispatchers.IO) {
-        val localVariableConfig = listDomainsRequestConfig()
+    suspend fun listDomainsWithHttpInfo(sort: SortListDomains?, order: OrderListDomains?) : ApiResponse<ListDomains200Response?> = withContext(Dispatchers.IO) {
+        val localVariableConfig = listDomainsRequestConfig(sort = sort, order = order)
 
         return@withContext request<Unit, ListDomains200Response>(
             localVariableConfig
@@ -548,11 +587,21 @@ open class DomainsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fa
     /**
      * To obtain the request config of the operation listDomains
      *
+     * @param sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to Sort.created_at)
+     * @param order Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @return RequestConfig
      */
-    fun listDomainsRequestConfig() : RequestConfig<Unit> {
+    fun listDomainsRequestConfig(sort: SortListDomains?, order: OrderListDomains?) : RequestConfig<Unit> {
         val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, kotlin.collections.List<kotlin.String>>()
+            .apply {
+                if (sort != null) {
+                    put("sort", listOf(sort.value))
+                }
+                if (order != null) {
+                    put("order", listOf(order.value))
+                }
+            }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
         localVariableHeaders["Accept"] = "application/json, application/problem+json"
 

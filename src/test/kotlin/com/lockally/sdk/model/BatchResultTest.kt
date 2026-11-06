@@ -63,5 +63,11 @@ class BatchResultTest : ShouldSpec() {
             //modelInstance.error shouldBe ("TODO")
         }
 
+        // to test the property `warning` - Advisory, and NOT a failure. Today the only one is a template variable the template referenced and the request never supplied, which rendered as the empty string.
+        should("test warning") {
+            // uncomment below to test the property
+            //modelInstance.warning shouldBe ("TODO")
+        }
+
     }
 }

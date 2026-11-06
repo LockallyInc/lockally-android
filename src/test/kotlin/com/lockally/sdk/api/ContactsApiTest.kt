@@ -27,8 +27,11 @@ import io.kotlintest.shouldBe
 import io.kotlintest.specs.ShouldSpec
 
 import com.lockally.sdk.api.ContactsApi
+import com.lockally.sdk.model.BulkUpsertExternalContacts200Response
+import com.lockally.sdk.model.BulkUpsertExternalContactsRequest
 import com.lockally.sdk.model.Contact
 import com.lockally.sdk.model.CreateContactRequest
+import com.lockally.sdk.model.ExternalContactInput
 import com.lockally.sdk.model.GetContactLists200Response
 import com.lockally.sdk.model.ListContacts200Response
 import com.lockally.sdk.model.Problem
@@ -38,6 +41,15 @@ class ContactsApiTest : ShouldSpec() {
     init {
         // uncomment below to create an instance of ContactsApi
         //val apiInstance = ContactsApi()
+
+        // to test bulkUpsertExternalContacts
+        should("test bulkUpsertExternalContacts") {
+            // uncomment below to test bulkUpsertExternalContacts
+            //val system : kotlin.String = system_example // kotlin.String | 
+            //val bulkUpsertExternalContactsRequest : BulkUpsertExternalContactsRequest =  // BulkUpsertExternalContactsRequest | 
+            //val result : BulkUpsertExternalContacts200Response = apiInstance.bulkUpsertExternalContacts(system, bulkUpsertExternalContactsRequest)
+            //result shouldBe ("TODO")
+        }
 
         // to test createContact
         should("test createContact") {
@@ -54,6 +66,14 @@ class ContactsApiTest : ShouldSpec() {
             //apiInstance.deleteContact(id)
         }
 
+        // to test deleteExternalContact
+        should("test deleteExternalContact") {
+            // uncomment below to test deleteExternalContact
+            //val system : kotlin.String = system_example // kotlin.String | Your label for the system the record comes from, for example `salesforce`, `hubspot` or `odoo`. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded).
+            //val externalId : kotlin.String = externalId_example // kotlin.String | The record's id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it.
+            //apiInstance.deleteExternalContact(system, externalId)
+        }
+
         // to test getContact
         should("test getContact") {
             // uncomment below to test getContact
@@ -67,6 +87,15 @@ class ContactsApiTest : ShouldSpec() {
             // uncomment below to test getContactLists
             //val id : java.util.UUID = 38400000-8cf0-11bd-b23e-10b96e4ef00d // java.util.UUID | 
             //val result : GetContactLists200Response = apiInstance.getContactLists(id)
+            //result shouldBe ("TODO")
+        }
+
+        // to test getExternalContact
+        should("test getExternalContact") {
+            // uncomment below to test getExternalContact
+            //val system : kotlin.String = system_example // kotlin.String | Your label for the system the record comes from, for example `salesforce`, `hubspot` or `odoo`. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded).
+            //val externalId : kotlin.String = externalId_example // kotlin.String | The record's id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it.
+            //val result : Contact = apiInstance.getExternalContact(system, externalId)
             //result shouldBe ("TODO")
         }
 
@@ -88,6 +117,16 @@ class ContactsApiTest : ShouldSpec() {
             //val id : java.util.UUID = 38400000-8cf0-11bd-b23e-10b96e4ef00d // java.util.UUID | 
             //val updateContactRequest : UpdateContactRequest =  // UpdateContactRequest | 
             //val result : Contact = apiInstance.updateContact(id, updateContactRequest)
+            //result shouldBe ("TODO")
+        }
+
+        // to test upsertExternalContact
+        should("test upsertExternalContact") {
+            // uncomment below to test upsertExternalContact
+            //val system : kotlin.String = system_example // kotlin.String | Your label for the system the record comes from, for example `salesforce`, `hubspot` or `odoo`. 1 to 64 characters: lowercase letters, digits, dot, underscore or hyphen (upper case is folded).
+            //val externalId : kotlin.String = externalId_example // kotlin.String | The record's id in that system, kept exactly as given (case matters). 1 to 255 characters, no spaces. URL-encode it.
+            //val externalContactInput : ExternalContactInput =  // ExternalContactInput | 
+            //val result : Contact = apiInstance.upsertExternalContact(system, externalId, externalContactInput)
             //result shouldBe ("TODO")
         }
 

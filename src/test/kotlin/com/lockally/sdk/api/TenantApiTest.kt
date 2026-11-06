@@ -30,6 +30,8 @@ import com.lockally.sdk.api.TenantApi
 import com.lockally.sdk.model.GetUsage200Response
 import com.lockally.sdk.model.Problem
 import com.lockally.sdk.model.Tenant
+import com.lockally.sdk.model.TrackingPolicy
+import com.lockally.sdk.model.UpdateTrackingPolicyRequest
 
 class TenantApiTest : ShouldSpec() {
     init {
@@ -43,10 +45,25 @@ class TenantApiTest : ShouldSpec() {
             //result shouldBe ("TODO")
         }
 
+        // to test getTrackingPolicy
+        should("test getTrackingPolicy") {
+            // uncomment below to test getTrackingPolicy
+            //val result : TrackingPolicy = apiInstance.getTrackingPolicy()
+            //result shouldBe ("TODO")
+        }
+
         // to test getUsage
         should("test getUsage") {
             // uncomment below to test getUsage
             //val result : GetUsage200Response = apiInstance.getUsage()
+            //result shouldBe ("TODO")
+        }
+
+        // to test updateTrackingPolicy
+        should("test updateTrackingPolicy") {
+            // uncomment below to test updateTrackingPolicy
+            //val updateTrackingPolicyRequest : UpdateTrackingPolicyRequest =  // UpdateTrackingPolicyRequest | 
+            //val result : TrackingPolicy = apiInstance.updateTrackingPolicy(updateTrackingPolicyRequest)
             //result shouldBe ("TODO")
         }
 

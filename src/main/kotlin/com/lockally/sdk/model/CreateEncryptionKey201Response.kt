@@ -34,6 +34,7 @@ import kotlinx.serialization.Contextual
  * @param id 
  * @param mailboxId 
  * @param createdAt 
+ * @param replacedOld 
  */
 @Serializable
 
@@ -46,7 +47,10 @@ data class CreateEncryptionKey201Response (
     val mailboxId: java.util.UUID? = null,
 
     @Contextual @SerialName(value = "created_at")
-    val createdAt: kotlin.time.Instant? = null
+    val createdAt: kotlin.time.Instant? = null,
+
+    @SerialName(value = "replaced_old")
+    val replacedOld: kotlin.Boolean? = null
 
 ) {
 

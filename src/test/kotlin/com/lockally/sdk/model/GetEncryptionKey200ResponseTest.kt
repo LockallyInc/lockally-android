@@ -69,5 +69,35 @@ class GetEncryptionKey200ResponseTest : ShouldSpec() {
             //modelInstance.version shouldBe ("TODO")
         }
 
+        // to test the property `createdAt`
+        should("test createdAt") {
+            // uncomment below to test the property
+            //modelInstance.createdAt shouldBe ("TODO")
+        }
+
+        // to test the property `rotatedAt`
+        should("test rotatedAt") {
+            // uncomment below to test the property
+            //modelInstance.rotatedAt shouldBe ("TODO")
+        }
+
+        // to test the property `hasRecovery`
+        should("test hasRecovery") {
+            // uncomment below to test the property
+            //modelInstance.hasRecovery shouldBe ("TODO")
+        }
+
+        // to test the property `recoverySetAt`
+        should("test recoverySetAt") {
+            // uncomment below to test the property
+            //modelInstance.recoverySetAt shouldBe ("TODO")
+        }
+
+        // to test the property `recoveryBlob`
+        should("test recoveryBlob") {
+            // uncomment below to test the property
+            //modelInstance.recoveryBlob shouldBe ("TODO")
+        }
+
     }
 }

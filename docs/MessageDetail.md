@@ -15,6 +15,8 @@
 | **subject** | **kotlin.String** |  |  [optional] |
 | **bounceReason** | **kotlin.String** |  |  [optional] |
 | **sizeBytes** | **kotlin.Int** |  |  [optional] |
+| **metadata** | **kotlin.collections.Map&lt;kotlin.String, kotlin.String&gt;** | The sender&#39;s own key/value from the send request. Always present; &#x60;{}&#x60; when none was set. |  [optional] |
+| **tags** | **kotlin.collections.List&lt;kotlin.String&gt;** | Grouping labels, lowercased and deduplicated. Always present; &#x60;[]&#x60; when none were set. |  [optional] |
 | **from** | **kotlin.String** |  |  [optional] |
 | **to** | **kotlin.collections.List&lt;kotlin.String&gt;** |  |  [optional] |
 | **cc** | **kotlin.collections.List&lt;kotlin.String&gt;** |  |  [optional] |

@@ -34,6 +34,7 @@ import com.lockally.sdk.model.GetSecurity200Response
 import com.lockally.sdk.model.GetStorage200Response
 import com.lockally.sdk.model.GetUserInsights200Response
 import com.lockally.sdk.model.Problem
+import com.lockally.sdk.model.TenantHealthReport
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -417,7 +418,7 @@ open class DashboardApi(basePath: kotlin.String = defaultBasePath, client: Call.
      * GET /v1/health
      * Full tenant health report
      * 
-     * @return kotlin.Any
+     * @return TenantHealthReport
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -426,11 +427,11 @@ open class DashboardApi(basePath: kotlin.String = defaultBasePath, client: Call.
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getTenantHealth() : kotlin.Any = withContext(Dispatchers.IO) {
+    suspend fun getTenantHealth() : TenantHealthReport = withContext(Dispatchers.IO) {
         val localVarResponse = getTenantHealthWithHttpInfo()
 
         return@withContext when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.Any
+            ResponseType.Success -> (localVarResponse as Success<*>).data as TenantHealthReport
             ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
             ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
             ResponseType.ClientError -> {
@@ -448,16 +449,16 @@ open class DashboardApi(basePath: kotlin.String = defaultBasePath, client: Call.
      * GET /v1/health
      * Full tenant health report
      * 
-     * @return ApiResponse<kotlin.Any?>
+     * @return ApiResponse<TenantHealthReport?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    suspend fun getTenantHealthWithHttpInfo() : ApiResponse<kotlin.Any?> = withContext(Dispatchers.IO) {
+    suspend fun getTenantHealthWithHttpInfo() : ApiResponse<TenantHealthReport?> = withContext(Dispatchers.IO) {
         val localVariableConfig = getTenantHealthRequestConfig()
 
-        return@withContext request<Unit, kotlin.Any>(
+        return@withContext request<Unit, TenantHealthReport>(
             localVariableConfig
         )
     }

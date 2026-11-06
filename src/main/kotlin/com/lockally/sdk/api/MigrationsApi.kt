@@ -37,6 +37,7 @@ import com.lockally.sdk.model.ListMigrations200Response
 import com.lockally.sdk.model.MapMigrationRequest
 import com.lockally.sdk.model.Migration
 import com.lockally.sdk.model.MigrationCredential
+import com.lockally.sdk.model.MigrationDNSCheck
 import com.lockally.sdk.model.MigrationProgress
 import com.lockally.sdk.model.Problem
 import com.lockally.sdk.model.StartMigration202Response
@@ -149,7 +150,7 @@ open class MigrationsApi(basePath: kotlin.String = defaultBasePath, client: Call
      * Check DNS readiness for cutover
      * 
      * @param id 
-     * @return kotlin.Any
+     * @return MigrationDNSCheck
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -158,11 +159,11 @@ open class MigrationsApi(basePath: kotlin.String = defaultBasePath, client: Call
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun checkMigrationDNS(id: java.util.UUID) : kotlin.Any = withContext(Dispatchers.IO) {
+    suspend fun checkMigrationDNS(id: java.util.UUID) : MigrationDNSCheck = withContext(Dispatchers.IO) {
         val localVarResponse = checkMigrationDNSWithHttpInfo(id = id)
 
         return@withContext when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.Any
+            ResponseType.Success -> (localVarResponse as Success<*>).data as MigrationDNSCheck
             ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
             ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
             ResponseType.ClientError -> {
@@ -181,16 +182,16 @@ open class MigrationsApi(basePath: kotlin.String = defaultBasePath, client: Call
      * Check DNS readiness for cutover
      * 
      * @param id 
-     * @return ApiResponse<kotlin.Any?>
+     * @return ApiResponse<MigrationDNSCheck?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    suspend fun checkMigrationDNSWithHttpInfo(id: java.util.UUID) : ApiResponse<kotlin.Any?> = withContext(Dispatchers.IO) {
+    suspend fun checkMigrationDNSWithHttpInfo(id: java.util.UUID) : ApiResponse<MigrationDNSCheck?> = withContext(Dispatchers.IO) {
         val localVariableConfig = checkMigrationDNSRequestConfig(id = id)
 
-        return@withContext request<Unit, kotlin.Any>(
+        return@withContext request<Unit, MigrationDNSCheck>(
             localVariableConfig
         )
     }

@@ -45,6 +45,8 @@ import kotlinx.serialization.Contextual
  * @param source 
  * @param department 
  * @param role 
+ * @param externalSystem The system that owns this contact's external id. Absent on contacts made by hand.
+ * @param externalId The contact's id in `external_system`. Absent on contacts made by hand.
  */
 @Serializable
 
@@ -90,7 +92,15 @@ data class Contact (
     val department: kotlin.String? = null,
 
     @SerialName(value = "role")
-    val role: kotlin.String? = null
+    val role: kotlin.String? = null,
+
+    /* The system that owns this contact's external id. Absent on contacts made by hand. */
+    @SerialName(value = "external_system")
+    val externalSystem: kotlin.String? = null,
+
+    /* The contact's id in `external_system`. Absent on contacts made by hand. */
+    @SerialName(value = "external_id")
+    val externalId: kotlin.String? = null
 
 ) {
 

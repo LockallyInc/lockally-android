@@ -260,7 +260,7 @@ apiInstance.accessTokenProvider = { "" }
 
 <a id="getTenantHealth"></a>
 # **getTenantHealth**
-> kotlin.Any getTenantHealth()
+> TenantHealthReport getTenantHealth()
 
 Full tenant health report
 
@@ -272,7 +272,7 @@ Full tenant health report
 
 val apiInstance = DashboardApi()
 try {
-    val result : kotlin.Any = apiInstance.getTenantHealth()
+    val result : TenantHealthReport = apiInstance.getTenantHealth()
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling DashboardApi#getTenantHealth")
@@ -288,7 +288,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**kotlin.Any**](kotlin.Any.md)
+[**TenantHealthReport**](TenantHealthReport.md)
 
 ### Authorization
 

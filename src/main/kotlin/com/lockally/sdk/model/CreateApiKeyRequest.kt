@@ -34,6 +34,7 @@ import kotlinx.serialization.Contextual
  * @param label Free-text identifier shown in the dashboard.
  * @param scopes Allowed scopes on this key.
  * @param test Issue a test key (`lk_test_` prefix). A test key accepts sends, records them and fires a simulated delivery webhook without sending mail, and counts against no limit or allowance. 
+ * @param expiresAt Optional. When the key stops authenticating. Omit it for a key that does not expire. Must be in the future: an expiry already past would mint a key that fails its first request. 
  */
 @Serializable
 
@@ -49,7 +50,11 @@ data class CreateApiKeyRequest (
 
     /* Issue a test key (`lk_test_` prefix). A test key accepts sends, records them and fires a simulated delivery webhook without sending mail, and counts against no limit or allowance.  */
     @SerialName(value = "test")
-    val test: kotlin.Boolean? = false
+    val test: kotlin.Boolean? = false,
+
+    /* Optional. When the key stops authenticating. Omit it for a key that does not expire. Must be in the future: an expiry already past would mint a key that fails its first request.  */
+    @Contextual @SerialName(value = "expires_at")
+    val expiresAt: kotlin.time.Instant? = null
 
 ) {
 

@@ -32,6 +32,7 @@ import com.lockally.sdk.model.CreateEncryptionKey201Response
 import com.lockally.sdk.model.CreateEncryptionKeyRequest
 import com.lockally.sdk.model.CreateEncryptionRecoveryRequest
 import com.lockally.sdk.model.GetEncryptionKey200Response
+import com.lockally.sdk.model.GetEncryptionStatus200Response
 import com.lockally.sdk.model.Problem
 import com.lockally.sdk.model.RotateEncryptionKeyRequest
 
@@ -142,7 +143,7 @@ open class EncryptionApi(basePath: kotlin.String = defaultBasePath, client: Call
     /**
      * POST /v1/encryption/keys
      * Upload an encryption key pair
-     * 
+     * Only the mailbox&#39;s own webmail session may call this; an API key is refused with 403. The private key is sealed under that mailbox&#39;s password, which an administrator never has. &#x60;mailbox_email&#x60;, if sent, must be the caller&#39;s own mailbox. A mailbox that already has a key is starting over: the old key is kept inactive, not destroyed, and the new one starts without a recovery code.
      * @param createEncryptionKeyRequest 
      * @return CreateEncryptionKey201Response
      * @throws IllegalStateException If the request is not correctly configured
@@ -174,7 +175,7 @@ open class EncryptionApi(basePath: kotlin.String = defaultBasePath, client: Call
     /**
      * POST /v1/encryption/keys
      * Upload an encryption key pair
-     * 
+     * Only the mailbox&#39;s own webmail session may call this; an API key is refused with 403. The private key is sealed under that mailbox&#39;s password, which an administrator never has. &#x60;mailbox_email&#x60;, if sent, must be the caller&#39;s own mailbox. A mailbox that already has a key is starting over: the old key is kept inactive, not destroyed, and the new one starts without a recovery code.
      * @param createEncryptionKeyRequest 
      * @return ApiResponse<CreateEncryptionKey201Response?>
      * @throws IllegalStateException If the request is not correctly configured
@@ -216,7 +217,7 @@ open class EncryptionApi(basePath: kotlin.String = defaultBasePath, client: Call
     /**
      * POST /v1/encryption/recovery
      * Store an encryption recovery blob
-     * 
+     * Only the mailbox&#39;s own webmail session may call this; an API key is refused with 403. The private key is sealed under that mailbox&#39;s password, which an administrator never has. &#x60;mailbox_email&#x60;, if sent, must be the caller&#39;s own mailbox. The blob is the private key sealed under a recovery code the browser generated; the code itself is never sent. Replaces any earlier one.
      * @param createEncryptionRecoveryRequest 
      * @return void
      * @throws IllegalStateException If the request is not correctly configured
@@ -247,7 +248,7 @@ open class EncryptionApi(basePath: kotlin.String = defaultBasePath, client: Call
     /**
      * POST /v1/encryption/recovery
      * Store an encryption recovery blob
-     * 
+     * Only the mailbox&#39;s own webmail session may call this; an API key is refused with 403. The private key is sealed under that mailbox&#39;s password, which an administrator never has. &#x60;mailbox_email&#x60;, if sent, must be the caller&#39;s own mailbox. The blob is the private key sealed under a recovery code the browser generated; the code itself is never sent. Replaces any earlier one.
      * @param createEncryptionRecoveryRequest 
      * @return ApiResponse<Unit?>
      * @throws IllegalStateException If the request is not correctly configured
@@ -288,7 +289,7 @@ open class EncryptionApi(basePath: kotlin.String = defaultBasePath, client: Call
     /**
      * GET /v1/encryption/keys/{email}
      * Get encryption key for a mailbox
-     * 
+     * Anyone in the workspace gets the public key. The mailbox&#39;s own webmail session also gets its sealed private key, its sealed recovery copy and the recovery state.
      * @param email 
      * @return GetEncryptionKey200Response
      * @throws IllegalStateException If the request is not correctly configured
@@ -320,7 +321,7 @@ open class EncryptionApi(basePath: kotlin.String = defaultBasePath, client: Call
     /**
      * GET /v1/encryption/keys/{email}
      * Get encryption key for a mailbox
-     * 
+     * Anyone in the workspace gets the public key. The mailbox&#39;s own webmail session also gets its sealed private key, its sealed recovery copy and the recovery state.
      * @param email 
      * @return ApiResponse<GetEncryptionKey200Response?>
      * @throws IllegalStateException If the request is not correctly configured
@@ -359,9 +360,79 @@ open class EncryptionApi(basePath: kotlin.String = defaultBasePath, client: Call
     }
 
     /**
+     * GET /v1/encryption/status
+     * End-to-end encryption status for the workspace
+     * For administrators: whether the add-on is on, and for each mailbox whether it has a key and a recovery code. Carries no key material.
+     * @return GetEncryptionStatus200Response
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    suspend fun getEncryptionStatus() : GetEncryptionStatus200Response = withContext(Dispatchers.IO) {
+        val localVarResponse = getEncryptionStatusWithHttpInfo()
+
+        return@withContext when (localVarResponse.responseType) {
+            ResponseType.Success -> (localVarResponse as Success<*>).data as GetEncryptionStatus200Response
+            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
+            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
+            ResponseType.ClientError -> {
+                val localVarError = localVarResponse as ClientError<*>
+                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+            }
+            ResponseType.ServerError -> {
+                val localVarError = localVarResponse as ServerError<*>
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
+            }
+        }
+    }
+
+    /**
+     * GET /v1/encryption/status
+     * End-to-end encryption status for the workspace
+     * For administrators: whether the add-on is on, and for each mailbox whether it has a key and a recovery code. Carries no key material.
+     * @return ApiResponse<GetEncryptionStatus200Response?>
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class)
+    suspend fun getEncryptionStatusWithHttpInfo() : ApiResponse<GetEncryptionStatus200Response?> = withContext(Dispatchers.IO) {
+        val localVariableConfig = getEncryptionStatusRequestConfig()
+
+        return@withContext request<Unit, GetEncryptionStatus200Response>(
+            localVariableConfig
+        )
+    }
+
+    /**
+     * To obtain the request config of the operation getEncryptionStatus
+     *
+     * @return RequestConfig
+     */
+    fun getEncryptionStatusRequestConfig() : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "application/json, application/problem+json"
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/v1/encryption/status",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
+            body = localVariableBody
+        )
+    }
+
+    /**
      * POST /v1/encryption/keys/rotate
-     * Rotate an encryption key
-     * 
+     * Re-seal an encryption key under a new password
+     * Only the mailbox&#39;s own webmail session may call this; an API key is refused with 403. The private key is sealed under that mailbox&#39;s password, which an administrator never has. &#x60;mailbox_email&#x60;, if sent, must be the caller&#39;s own mailbox. The key pair does not change, so every message stays readable.
      * @param rotateEncryptionKeyRequest 
      * @return void
      * @throws IllegalStateException If the request is not correctly configured
@@ -391,8 +462,8 @@ open class EncryptionApi(basePath: kotlin.String = defaultBasePath, client: Call
 
     /**
      * POST /v1/encryption/keys/rotate
-     * Rotate an encryption key
-     * 
+     * Re-seal an encryption key under a new password
+     * Only the mailbox&#39;s own webmail session may call this; an API key is refused with 403. The private key is sealed under that mailbox&#39;s password, which an administrator never has. &#x60;mailbox_email&#x60;, if sent, must be the caller&#39;s own mailbox. The key pair does not change, so every message stays readable.
      * @param rotateEncryptionKeyRequest 
      * @return ApiResponse<Unit?>
      * @throws IllegalStateException If the request is not correctly configured

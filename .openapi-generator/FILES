@@ -30,6 +30,10 @@ docs/BatchLookupPublicKeys200ResponseDataInner.md
 docs/BatchResult.md
 docs/BillingApi.md
 docs/BillingStatus.md
+docs/BulkUpsertExternalContacts200Response.md
+docs/BulkUpsertExternalContacts200ResponseResultsInner.md
+docs/BulkUpsertExternalContactsRequest.md
+docs/BulkUpsertExternalContactsRequestContactsInner.md
 docs/Calendar.md
 docs/CalendarEvent.md
 docs/CalendarIntegration.md
@@ -88,6 +92,7 @@ docs/DraftResult.md
 docs/DraftsApi.md
 docs/EncryptionApi.md
 docs/ExportMailbox201Response.md
+docs/ExternalContactInput.md
 docs/GALSettings.md
 docs/GetAddOnStatus200Response.md
 docs/GetAuditSummary200Response.md
@@ -110,6 +115,8 @@ docs/GetDomainsStatus200Response.md
 docs/GetDomainsStatus200ResponseDomainsInner.md
 docs/GetDomainsStatus200ResponseDomainsInnerChecksInner.md
 docs/GetEncryptionKey200Response.md
+docs/GetEncryptionStatus200Response.md
+docs/GetEncryptionStatus200ResponseMailboxesInner.md
 docs/GetIPAssignment200Response.md
 docs/GetIntegrationsSummary200Response.md
 docs/GetIntegrationsSummary200ResponseApiKeysInner.md
@@ -170,6 +177,8 @@ docs/MessageStatsRates.md
 docs/MessageStatsWindow.md
 docs/Migration.md
 docs/MigrationCredential.md
+docs/MigrationDNSCheck.md
+docs/MigrationDomainDNS.md
 docs/MigrationEvent.md
 docs/MigrationMailbox.md
 docs/MigrationProgress.md
@@ -185,6 +194,7 @@ docs/Resource.md
 docs/ResourcesApi.md
 docs/ReturnPath.md
 docs/ReturnPathCheck.md
+docs/RotateApiKeyRequest.md
 docs/RotateEncryptionKeyRequest.md
 docs/SendApi.md
 docs/SendEmail200Response.md
@@ -208,6 +218,8 @@ docs/TemplateInput.md
 docs/TemplatesApi.md
 docs/Tenant.md
 docs/TenantApi.md
+docs/TenantHealthCheck.md
+docs/TenantHealthReport.md
 docs/TestApi.md
 docs/Thread.md
 docs/ThreadClassification.md
@@ -216,8 +228,10 @@ docs/ThreadMessage.md
 docs/ThreadMessageBody.md
 docs/ThreadMessageBodyBody.md
 docs/ThreadSummary.md
+docs/TrackingPolicy.md
 docs/UnitBundle.md
 docs/UpdateAdminRequest.md
+docs/UpdateApiKeyRequest.md
 docs/UpdateCalendarEventRequest.md
 docs/UpdateCalendarIntegrationRequest.md
 docs/UpdateCalendarMemberRequest.md
@@ -231,6 +245,7 @@ docs/UpdateMailboxRequest.md
 docs/UpdateMigrationMailboxRequest.md
 docs/UpdateMigrationRequest.md
 docs/UpdateResourceRequest.md
+docs/UpdateTrackingPolicyRequest.md
 docs/UpdateUserRequest.md
 docs/UpdateWebhookRequest.md
 docs/User.md
@@ -321,6 +336,10 @@ src/main/kotlin/com/lockally/sdk/model/BatchLookupPublicKeys200Response.kt
 src/main/kotlin/com/lockally/sdk/model/BatchLookupPublicKeys200ResponseDataInner.kt
 src/main/kotlin/com/lockally/sdk/model/BatchResult.kt
 src/main/kotlin/com/lockally/sdk/model/BillingStatus.kt
+src/main/kotlin/com/lockally/sdk/model/BulkUpsertExternalContacts200Response.kt
+src/main/kotlin/com/lockally/sdk/model/BulkUpsertExternalContacts200ResponseResultsInner.kt
+src/main/kotlin/com/lockally/sdk/model/BulkUpsertExternalContactsRequest.kt
+src/main/kotlin/com/lockally/sdk/model/BulkUpsertExternalContactsRequestContactsInner.kt
 src/main/kotlin/com/lockally/sdk/model/Calendar.kt
 src/main/kotlin/com/lockally/sdk/model/CalendarEvent.kt
 src/main/kotlin/com/lockally/sdk/model/CalendarIntegration.kt
@@ -370,6 +389,7 @@ src/main/kotlin/com/lockally/sdk/model/Draft.kt
 src/main/kotlin/com/lockally/sdk/model/DraftList.kt
 src/main/kotlin/com/lockally/sdk/model/DraftResult.kt
 src/main/kotlin/com/lockally/sdk/model/ExportMailbox201Response.kt
+src/main/kotlin/com/lockally/sdk/model/ExternalContactInput.kt
 src/main/kotlin/com/lockally/sdk/model/GALSettings.kt
 src/main/kotlin/com/lockally/sdk/model/GetAddOnStatus200Response.kt
 src/main/kotlin/com/lockally/sdk/model/GetAuditSummary200Response.kt
@@ -392,6 +412,8 @@ src/main/kotlin/com/lockally/sdk/model/GetDomainsStatus200Response.kt
 src/main/kotlin/com/lockally/sdk/model/GetDomainsStatus200ResponseDomainsInner.kt
 src/main/kotlin/com/lockally/sdk/model/GetDomainsStatus200ResponseDomainsInnerChecksInner.kt
 src/main/kotlin/com/lockally/sdk/model/GetEncryptionKey200Response.kt
+src/main/kotlin/com/lockally/sdk/model/GetEncryptionStatus200Response.kt
+src/main/kotlin/com/lockally/sdk/model/GetEncryptionStatus200ResponseMailboxesInner.kt
 src/main/kotlin/com/lockally/sdk/model/GetIPAssignment200Response.kt
 src/main/kotlin/com/lockally/sdk/model/GetIntegrationsSummary200Response.kt
 src/main/kotlin/com/lockally/sdk/model/GetIntegrationsSummary200ResponseApiKeysInner.kt
@@ -449,6 +471,8 @@ src/main/kotlin/com/lockally/sdk/model/MessageStatsRates.kt
 src/main/kotlin/com/lockally/sdk/model/MessageStatsWindow.kt
 src/main/kotlin/com/lockally/sdk/model/Migration.kt
 src/main/kotlin/com/lockally/sdk/model/MigrationCredential.kt
+src/main/kotlin/com/lockally/sdk/model/MigrationDNSCheck.kt
+src/main/kotlin/com/lockally/sdk/model/MigrationDomainDNS.kt
 src/main/kotlin/com/lockally/sdk/model/MigrationEvent.kt
 src/main/kotlin/com/lockally/sdk/model/MigrationMailbox.kt
 src/main/kotlin/com/lockally/sdk/model/MigrationProgress.kt
@@ -462,6 +486,7 @@ src/main/kotlin/com/lockally/sdk/model/ReplaceDistributionListMembersRequest.kt
 src/main/kotlin/com/lockally/sdk/model/Resource.kt
 src/main/kotlin/com/lockally/sdk/model/ReturnPath.kt
 src/main/kotlin/com/lockally/sdk/model/ReturnPathCheck.kt
+src/main/kotlin/com/lockally/sdk/model/RotateApiKeyRequest.kt
 src/main/kotlin/com/lockally/sdk/model/RotateEncryptionKeyRequest.kt
 src/main/kotlin/com/lockally/sdk/model/SendEmail200Response.kt
 src/main/kotlin/com/lockally/sdk/model/SendEmail202Response.kt
@@ -480,6 +505,8 @@ src/main/kotlin/com/lockally/sdk/model/Suppression.kt
 src/main/kotlin/com/lockally/sdk/model/Template.kt
 src/main/kotlin/com/lockally/sdk/model/TemplateInput.kt
 src/main/kotlin/com/lockally/sdk/model/Tenant.kt
+src/main/kotlin/com/lockally/sdk/model/TenantHealthCheck.kt
+src/main/kotlin/com/lockally/sdk/model/TenantHealthReport.kt
 src/main/kotlin/com/lockally/sdk/model/Thread.kt
 src/main/kotlin/com/lockally/sdk/model/ThreadClassification.kt
 src/main/kotlin/com/lockally/sdk/model/ThreadList.kt
@@ -487,8 +514,10 @@ src/main/kotlin/com/lockally/sdk/model/ThreadMessage.kt
 src/main/kotlin/com/lockally/sdk/model/ThreadMessageBody.kt
 src/main/kotlin/com/lockally/sdk/model/ThreadMessageBodyBody.kt
 src/main/kotlin/com/lockally/sdk/model/ThreadSummary.kt
+src/main/kotlin/com/lockally/sdk/model/TrackingPolicy.kt
 src/main/kotlin/com/lockally/sdk/model/UnitBundle.kt
 src/main/kotlin/com/lockally/sdk/model/UpdateAdminRequest.kt
+src/main/kotlin/com/lockally/sdk/model/UpdateApiKeyRequest.kt
 src/main/kotlin/com/lockally/sdk/model/UpdateCalendarEventRequest.kt
 src/main/kotlin/com/lockally/sdk/model/UpdateCalendarIntegrationRequest.kt
 src/main/kotlin/com/lockally/sdk/model/UpdateCalendarMemberRequest.kt
@@ -502,6 +531,7 @@ src/main/kotlin/com/lockally/sdk/model/UpdateMailboxRequest.kt
 src/main/kotlin/com/lockally/sdk/model/UpdateMigrationMailboxRequest.kt
 src/main/kotlin/com/lockally/sdk/model/UpdateMigrationRequest.kt
 src/main/kotlin/com/lockally/sdk/model/UpdateResourceRequest.kt
+src/main/kotlin/com/lockally/sdk/model/UpdateTrackingPolicyRequest.kt
 src/main/kotlin/com/lockally/sdk/model/UpdateUserRequest.kt
 src/main/kotlin/com/lockally/sdk/model/UpdateWebhookRequest.kt
 src/main/kotlin/com/lockally/sdk/model/User.kt
@@ -563,6 +593,10 @@ src/test/kotlin/com/lockally/sdk/model/BatchLookupPublicKeys200ResponseDataInner
 src/test/kotlin/com/lockally/sdk/model/BatchLookupPublicKeys200ResponseTest.kt
 src/test/kotlin/com/lockally/sdk/model/BatchResultTest.kt
 src/test/kotlin/com/lockally/sdk/model/BillingStatusTest.kt
+src/test/kotlin/com/lockally/sdk/model/BulkUpsertExternalContacts200ResponseResultsInnerTest.kt
+src/test/kotlin/com/lockally/sdk/model/BulkUpsertExternalContacts200ResponseTest.kt
+src/test/kotlin/com/lockally/sdk/model/BulkUpsertExternalContactsRequestContactsInnerTest.kt
+src/test/kotlin/com/lockally/sdk/model/BulkUpsertExternalContactsRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/CalendarEventTest.kt
 src/test/kotlin/com/lockally/sdk/model/CalendarIntegrationTest.kt
 src/test/kotlin/com/lockally/sdk/model/CalendarMemberTest.kt
@@ -612,6 +646,7 @@ src/test/kotlin/com/lockally/sdk/model/DraftListTest.kt
 src/test/kotlin/com/lockally/sdk/model/DraftResultTest.kt
 src/test/kotlin/com/lockally/sdk/model/DraftTest.kt
 src/test/kotlin/com/lockally/sdk/model/ExportMailbox201ResponseTest.kt
+src/test/kotlin/com/lockally/sdk/model/ExternalContactInputTest.kt
 src/test/kotlin/com/lockally/sdk/model/GALSettingsTest.kt
 src/test/kotlin/com/lockally/sdk/model/GetAddOnStatus200ResponseTest.kt
 src/test/kotlin/com/lockally/sdk/model/GetAuditSummary200ResponseTest.kt
@@ -634,6 +669,8 @@ src/test/kotlin/com/lockally/sdk/model/GetDomainsStatus200ResponseDomainsInnerCh
 src/test/kotlin/com/lockally/sdk/model/GetDomainsStatus200ResponseDomainsInnerTest.kt
 src/test/kotlin/com/lockally/sdk/model/GetDomainsStatus200ResponseTest.kt
 src/test/kotlin/com/lockally/sdk/model/GetEncryptionKey200ResponseTest.kt
+src/test/kotlin/com/lockally/sdk/model/GetEncryptionStatus200ResponseMailboxesInnerTest.kt
+src/test/kotlin/com/lockally/sdk/model/GetEncryptionStatus200ResponseTest.kt
 src/test/kotlin/com/lockally/sdk/model/GetIPAssignment200ResponseTest.kt
 src/test/kotlin/com/lockally/sdk/model/GetIntegrationsSummary200ResponseApiKeysInnerTest.kt
 src/test/kotlin/com/lockally/sdk/model/GetIntegrationsSummary200ResponseTest.kt
@@ -690,6 +727,8 @@ src/test/kotlin/com/lockally/sdk/model/MessageStatsTest.kt
 src/test/kotlin/com/lockally/sdk/model/MessageStatsWindowTest.kt
 src/test/kotlin/com/lockally/sdk/model/MessageTest.kt
 src/test/kotlin/com/lockally/sdk/model/MigrationCredentialTest.kt
+src/test/kotlin/com/lockally/sdk/model/MigrationDNSCheckTest.kt
+src/test/kotlin/com/lockally/sdk/model/MigrationDomainDNSTest.kt
 src/test/kotlin/com/lockally/sdk/model/MigrationEventTest.kt
 src/test/kotlin/com/lockally/sdk/model/MigrationMailboxTest.kt
 src/test/kotlin/com/lockally/sdk/model/MigrationProgressMailboxesInnerTest.kt
@@ -704,6 +743,7 @@ src/test/kotlin/com/lockally/sdk/model/ReplaceDistributionListMembersRequestTest
 src/test/kotlin/com/lockally/sdk/model/ResourceTest.kt
 src/test/kotlin/com/lockally/sdk/model/ReturnPathCheckTest.kt
 src/test/kotlin/com/lockally/sdk/model/ReturnPathTest.kt
+src/test/kotlin/com/lockally/sdk/model/RotateApiKeyRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/RotateEncryptionKeyRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/SendEmail200ResponseTest.kt
 src/test/kotlin/com/lockally/sdk/model/SendEmail202ResponseTest.kt
@@ -721,6 +761,8 @@ src/test/kotlin/com/lockally/sdk/model/StartMigration202ResponseTest.kt
 src/test/kotlin/com/lockally/sdk/model/SuppressionTest.kt
 src/test/kotlin/com/lockally/sdk/model/TemplateInputTest.kt
 src/test/kotlin/com/lockally/sdk/model/TemplateTest.kt
+src/test/kotlin/com/lockally/sdk/model/TenantHealthCheckTest.kt
+src/test/kotlin/com/lockally/sdk/model/TenantHealthReportTest.kt
 src/test/kotlin/com/lockally/sdk/model/TenantTest.kt
 src/test/kotlin/com/lockally/sdk/model/ThreadClassificationTest.kt
 src/test/kotlin/com/lockally/sdk/model/ThreadListTest.kt
@@ -729,8 +771,10 @@ src/test/kotlin/com/lockally/sdk/model/ThreadMessageBodyTest.kt
 src/test/kotlin/com/lockally/sdk/model/ThreadMessageTest.kt
 src/test/kotlin/com/lockally/sdk/model/ThreadSummaryTest.kt
 src/test/kotlin/com/lockally/sdk/model/ThreadTest.kt
+src/test/kotlin/com/lockally/sdk/model/TrackingPolicyTest.kt
 src/test/kotlin/com/lockally/sdk/model/UnitBundleTest.kt
 src/test/kotlin/com/lockally/sdk/model/UpdateAdminRequestTest.kt
+src/test/kotlin/com/lockally/sdk/model/UpdateApiKeyRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/UpdateCalendarEventRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/UpdateCalendarIntegrationRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/UpdateCalendarMemberRequestTest.kt
@@ -744,6 +788,7 @@ src/test/kotlin/com/lockally/sdk/model/UpdateMailboxRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/UpdateMigrationMailboxRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/UpdateMigrationRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/UpdateResourceRequestTest.kt
+src/test/kotlin/com/lockally/sdk/model/UpdateTrackingPolicyRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/UpdateUserRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/UpdateWebhookRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/UserEventTest.kt

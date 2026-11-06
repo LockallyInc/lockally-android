@@ -337,7 +337,7 @@ apiInstance.accessTokenProvider = { "" }
 
 <a id="listDomains"></a>
 # **listDomains**
-> ListDomains200Response listDomains()
+> ListDomains200Response listDomains(sort, order)
 
 List domains
 
@@ -350,8 +350,10 @@ Returns every domain registered under the calling tenant.
 //import com.lockally.sdk.model.*
 
 val apiInstance = DomainsApi()
+val sort : kotlin.String = sort_example // kotlin.String | Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index.
+val order : kotlin.String = order_example // kotlin.String | Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total.
 try {
-    val result : ListDomains200Response = apiInstance.listDomains()
+    val result : ListDomains200Response = apiInstance.listDomains(sort, order)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling DomainsApi#listDomains")
@@ -363,7 +365,10 @@ try {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+| **sort** | **kotlin.String**| Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. | [optional] [default to Sort.created_at] [enum: domain, created_at, verified_at] |
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **order** | **kotlin.String**| Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. | [optional] [enum: asc, desc] |
 
 ### Return type
 

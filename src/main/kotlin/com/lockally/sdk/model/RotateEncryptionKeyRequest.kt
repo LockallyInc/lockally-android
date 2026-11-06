@@ -31,19 +31,19 @@ import kotlinx.serialization.Contextual
 /**
  * 
  *
- * @param mailboxEmail 
  * @param encryptedPrivateKey 
+ * @param mailboxEmail 
  * @param kdfParams 
  */
 @Serializable
 
 data class RotateEncryptionKeyRequest (
 
-    @SerialName(value = "mailbox_email")
-    val mailboxEmail: kotlin.String,
-
     @SerialName(value = "encrypted_private_key")
     val encryptedPrivateKey: kotlin.String,
+
+    @SerialName(value = "mailbox_email")
+    val mailboxEmail: kotlin.String? = null,
 
     @Contextual @SerialName(value = "kdf_params")
     val kdfParams: kotlin.Any? = null

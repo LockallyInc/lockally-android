@@ -4,8 +4,8 @@
 ## Properties
 | Name | Type | Description | Notes |
 | ------------ | ------------- | ------------- | ------------- |
-| **mailboxEmail** | **kotlin.String** |  |  |
 | **encryptedPrivateKey** | **kotlin.String** |  |  |
+| **mailboxEmail** | **kotlin.String** |  |  [optional] |
 | **kdfParams** | [**kotlin.Any**](.md) |  |  [optional] |
 
 

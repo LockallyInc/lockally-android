@@ -51,5 +51,11 @@ class CreateEncryptionKey201ResponseTest : ShouldSpec() {
             //modelInstance.createdAt shouldBe ("TODO")
         }
 
+        // to test the property `replacedOld`
+        should("test replacedOld") {
+            // uncomment below to test the property
+            //modelInstance.replacedOld shouldBe ("TODO")
+        }
+
     }
 }
