@@ -282,7 +282,7 @@ open class TemplatesApi(basePath: kotlin.String = defaultBasePath, client: Call.
      * enum for parameter sort
      */
      enum class SortListTemplates(val value: kotlin.String) {
-         @SerialName(value = "name") name("name"),
+         @SerialName(value = "name") name_("name"),
          @SerialName(value = "created_at") created_at("created_at"),
          @SerialName(value = "updated_at") updated_at("updated_at");
 
@@ -317,7 +317,7 @@ open class TemplatesApi(basePath: kotlin.String = defaultBasePath, client: Call.
      * GET /v1/templates
      * List templates
      * 
-     * @param sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to Sort.name)
+     * @param sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to Sort.name_)
      * @param order Defaults to asc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @return ListTemplates200Response
      * @throws IllegalStateException If the request is not correctly configured
@@ -328,7 +328,7 @@ open class TemplatesApi(basePath: kotlin.String = defaultBasePath, client: Call.
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listTemplates(sort: SortListTemplates? = SortListTemplates.name, order: OrderListTemplates? = null) : ListTemplates200Response = withContext(Dispatchers.IO) {
+    suspend fun listTemplates(sort: SortListTemplates? = SortListTemplates.name_, order: OrderListTemplates? = null) : ListTemplates200Response = withContext(Dispatchers.IO) {
         val localVarResponse = listTemplatesWithHttpInfo(sort = sort, order = order)
 
         return@withContext when (localVarResponse.responseType) {
@@ -350,7 +350,7 @@ open class TemplatesApi(basePath: kotlin.String = defaultBasePath, client: Call.
      * GET /v1/templates
      * List templates
      * 
-     * @param sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to Sort.name)
+     * @param sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to Sort.name_)
      * @param order Defaults to asc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @return ApiResponse<ListTemplates200Response?>
      * @throws IllegalStateException If the request is not correctly configured
@@ -369,7 +369,7 @@ open class TemplatesApi(basePath: kotlin.String = defaultBasePath, client: Call.
     /**
      * To obtain the request config of the operation listTemplates
      *
-     * @param sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to Sort.name)
+     * @param sort Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional, default to Sort.name_)
      * @param order Defaults to asc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
      * @return RequestConfig
      */

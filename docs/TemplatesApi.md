@@ -194,7 +194,7 @@ try {
 ```
 
 ### Parameters
-| **sort** | **kotlin.String**| Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. | [optional] [default to Sort.name] [enum: name, created_at, updated_at] |
+| **sort** | **kotlin.String**| Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. | [optional] [default to Sort.name_] [enum: name, created_at, updated_at] |
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **order** | **kotlin.String**| Defaults to asc for the default field and asc for any other. Always tie-broken on id, so the order is total. | [optional] [enum: asc, desc] |
