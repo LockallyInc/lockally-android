@@ -7,16 +7,12 @@ All URIs are relative to *https://api.lockally.com*
 | [**addSharedMember**](MailboxesApi.md#addSharedMember) | **POST** /v1/mailboxes/{email}/members | Add a shared mailbox member |
 | [**createMailbox**](MailboxesApi.md#createMailbox) | **POST** /v1/mailboxes | Create a mailbox |
 | [**deleteMailbox**](MailboxesApi.md#deleteMailbox) | **DELETE** /v1/mailboxes/{email} | Soft-delete a mailbox |
-| [**deleteVacationResponder**](MailboxesApi.md#deleteVacationResponder) | **DELETE** /v1/mailboxes/{email}/vacation | Remove the vacation responder |
 | [**downloadMailboxExport**](MailboxesApi.md#downloadMailboxExport) | **GET** /v1/mailboxes/{email}/export/download | Download a previously-issued mailbox export |
 | [**exportMailbox**](MailboxesApi.md#exportMailbox) | **POST** /v1/mailboxes/{email}/export | Request a mailbox export |
 | [**getMailbox**](MailboxesApi.md#getMailbox) | **GET** /v1/mailboxes/{email} | Get a mailbox |
-| [**getVacationResponder**](MailboxesApi.md#getVacationResponder) | **GET** /v1/mailboxes/{email}/vacation | Get the vacation responder |
 | [**listMailboxes**](MailboxesApi.md#listMailboxes) | **GET** /v1/mailboxes | List mailboxes |
 | [**listSharedMembers**](MailboxesApi.md#listSharedMembers) | **GET** /v1/mailboxes/{email}/members | List shared mailbox members |
-| [**listVacationResponders**](MailboxesApi.md#listVacationResponders) | **GET** /v1/vacation | List all vacation responders |
 | [**removeSharedMember**](MailboxesApi.md#removeSharedMember) | **DELETE** /v1/mailboxes/{email}/members/{memberEmail} | Remove a shared mailbox member |
-| [**setVacationResponder**](MailboxesApi.md#setVacationResponder) | **PUT** /v1/mailboxes/{email}/vacation | Set the vacation responder |
 | [**updateMailbox**](MailboxesApi.md#updateMailbox) | **PATCH** /v1/mailboxes/{email} | Update a mailbox |
 
 
@@ -151,59 +147,6 @@ try {
     e.printStackTrace()
 } catch (e: ServerException) {
     println("5xx response calling MailboxesApi#deleteMailbox")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **email** | **kotlin.String**|  | |
-
-### Return type
-
-null (empty response body)
-
-### Authorization
-
-
-Configure bearerAuth statically:
-```kotlin
-ApiClient.accessToken = ""
-```
-Configure bearerAuth dynamically:
-```kotlin
-apiInstance.accessTokenProvider = { "" }
-```
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/problem+json
-
-<a id="deleteVacationResponder"></a>
-# **deleteVacationResponder**
-> deleteVacationResponder(email)
-
-Remove the vacation responder
-
-Idempotent, 204 whether or not a row existed.
-
-### Example
-```kotlin
-// Import classes:
-//import com.lockally.sdk.infrastructure.*
-//import com.lockally.sdk.model.*
-
-val apiInstance = MailboxesApi()
-val email : kotlin.String = email_example // kotlin.String | 
-try {
-    apiInstance.deleteVacationResponder(email)
-} catch (e: ClientException) {
-    println("4xx response calling MailboxesApi#deleteVacationResponder")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling MailboxesApi#deleteVacationResponder")
     e.printStackTrace()
 }
 ```
@@ -388,60 +331,6 @@ apiInstance.accessTokenProvider = { "" }
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/problem+json
 
-<a id="getVacationResponder"></a>
-# **getVacationResponder**
-> VacationResponder getVacationResponder(email)
-
-Get the vacation responder
-
-Returns the stored vacation rule or 404 if none is set.
-
-### Example
-```kotlin
-// Import classes:
-//import com.lockally.sdk.infrastructure.*
-//import com.lockally.sdk.model.*
-
-val apiInstance = MailboxesApi()
-val email : kotlin.String = email_example // kotlin.String | 
-try {
-    val result : VacationResponder = apiInstance.getVacationResponder(email)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling MailboxesApi#getVacationResponder")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling MailboxesApi#getVacationResponder")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **email** | **kotlin.String**|  | |
-
-### Return type
-
-[**VacationResponder**](VacationResponder.md)
-
-### Authorization
-
-
-Configure bearerAuth statically:
-```kotlin
-ApiClient.accessToken = ""
-```
-Configure bearerAuth dynamically:
-```kotlin
-apiInstance.accessTokenProvider = { "" }
-```
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json, application/problem+json
-
 <a id="listMailboxes"></a>
 # **listMailboxes**
 > ListMailboxes200Response listMailboxes(limit)
@@ -548,57 +437,6 @@ apiInstance.accessTokenProvider = { "" }
  - **Content-Type**: Not defined
  - **Accept**: application/json, application/problem+json
 
-<a id="listVacationResponders"></a>
-# **listVacationResponders**
-> ListVacationResponders200Response listVacationResponders()
-
-List all vacation responders
-
-Returns every vacation responder for the calling tenant.
-
-### Example
-```kotlin
-// Import classes:
-//import com.lockally.sdk.infrastructure.*
-//import com.lockally.sdk.model.*
-
-val apiInstance = MailboxesApi()
-try {
-    val result : ListVacationResponders200Response = apiInstance.listVacationResponders()
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling MailboxesApi#listVacationResponders")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling MailboxesApi#listVacationResponders")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-This endpoint does not need any parameter.
-
-### Return type
-
-[**ListVacationResponders200Response**](ListVacationResponders200Response.md)
-
-### Authorization
-
-
-Configure bearerAuth statically:
-```kotlin
-ApiClient.accessToken = ""
-```
-Configure bearerAuth dynamically:
-```kotlin
-apiInstance.accessTokenProvider = { "" }
-```
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json, application/problem+json
-
 <a id="removeSharedMember"></a>
 # **removeSharedMember**
 > removeSharedMember(email, memberEmail)
@@ -651,62 +489,6 @@ apiInstance.accessTokenProvider = { "" }
 
  - **Content-Type**: Not defined
  - **Accept**: application/problem+json
-
-<a id="setVacationResponder"></a>
-# **setVacationResponder**
-> VacationResponder setVacationResponder(email, setVacationResponderRequest)
-
-Set the vacation responder
-
-Upsert, same endpoint creates or replaces the rule. Clears &#x60;synced_at&#x60;; the rule is staged until a later sync pushes it to the mail server. 
-
-### Example
-```kotlin
-// Import classes:
-//import com.lockally.sdk.infrastructure.*
-//import com.lockally.sdk.model.*
-
-val apiInstance = MailboxesApi()
-val email : kotlin.String = email_example // kotlin.String | 
-val setVacationResponderRequest : SetVacationResponderRequest =  // SetVacationResponderRequest | 
-try {
-    val result : VacationResponder = apiInstance.setVacationResponder(email, setVacationResponderRequest)
-    println(result)
-} catch (e: ClientException) {
-    println("4xx response calling MailboxesApi#setVacationResponder")
-    e.printStackTrace()
-} catch (e: ServerException) {
-    println("5xx response calling MailboxesApi#setVacationResponder")
-    e.printStackTrace()
-}
-```
-
-### Parameters
-| **email** | **kotlin.String**|  | |
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **setVacationResponderRequest** | [**SetVacationResponderRequest**](SetVacationResponderRequest.md)|  | |
-
-### Return type
-
-[**VacationResponder**](VacationResponder.md)
-
-### Authorization
-
-
-Configure bearerAuth statically:
-```kotlin
-ApiClient.accessToken = ""
-```
-Configure bearerAuth dynamically:
-```kotlin
-apiInstance.accessTokenProvider = { "" }
-```
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json, application/problem+json
 
 <a id="updateMailbox"></a>
 # **updateMailbox**

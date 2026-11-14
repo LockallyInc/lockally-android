@@ -11,8 +11,8 @@
 
 # Lockally for Android (Kotlin)
 
-Official Kotlin SDK for the [Lockally](https://lockally.com) API — transactional
-email, contacts, and agent inboxes. A generated, coroutine-based OkHttp client
+Official [Lockally](https://lockally.com) SDK for Android: send email and manage mailboxes, domains and webhooks through the Lockally API.
+This library is a generated, coroutine-based OkHttp client
 plus a secure auth + ergonomics layer (`com.lockally.sdk.auth`): `TokenProvider`,
 OAuth 2.1 PKCE, automatic retries, idempotency keys, and `Flow` pagination.
 
@@ -30,7 +30,7 @@ dependencies {
 
 ## 🔐 Security: never ship a live API key
 
-An APK is distributed — anything compiled in, including an `lk_live_…` key, can
+An APK is distributed: anything compiled in, including an `lk_live_…` key, can
 be extracted. A leaked send-scoped key is an open spam relay billed to you.
 
 - **Sending mail (OTP, verification) + contact sync** → `BackendTokenProvider`.
@@ -54,7 +54,7 @@ val send = SendApi(client = Lockally.okHttpClient(provider))
 ```
 
 `Lockally.okHttpClient(provider)` returns an `OkHttpClient` with retries,
-idempotency, and auth wired in — pass it to any generated `*Api`.
+idempotency, and auth wired in. Pass it to any generated `*Api`.
 
 ## Cookbook
 
@@ -87,7 +87,7 @@ paginate { cursor ->
 Register the device's FCM token with your backend; it decides per event whether
 to push, email (via Lockally), or both. The SDK drives the email leg.
 
-### Inbox / agent (OAuth PKCE — user tokens)
+### Inbox / agent (OAuth PKCE, user tokens)
 The one interactive user-token flow the API issues today (`inboxes:read/write`).
 Run the browser step with Chrome Custom Tabs / AppAuth, then:
 
@@ -102,7 +102,7 @@ oauth.exchange(code, pkce.verifier)
 val inbox = InboxesApi(client = Lockally.okHttpClient(oauth))
 ```
 
-Store refresh tokens with `EncryptedSharedPreferences` — see the `TokenStore`
+Store refresh tokens with `EncryptedSharedPreferences`; see the `TokenStore`
 KDoc for a ~5-line implementation.
 
 ## Errors
@@ -112,4 +112,4 @@ Non-2xx responses map to `LockallyException` (`status` / `code` / `message` /
 
 ## License
 
-MIT — see [LICENSE](./LICENSE).
+MIT. See [LICENSE](./LICENSE).

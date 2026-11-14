@@ -32,13 +32,10 @@ import com.lockally.sdk.model.CreateMailboxRequest
 import com.lockally.sdk.model.ExportMailbox201Response
 import com.lockally.sdk.model.ListMailboxes200Response
 import com.lockally.sdk.model.ListSharedMembers200Response
-import com.lockally.sdk.model.ListVacationResponders200Response
 import com.lockally.sdk.model.Mailbox
 import com.lockally.sdk.model.Problem
-import com.lockally.sdk.model.SetVacationResponderRequest
 import com.lockally.sdk.model.SharedMember
 import com.lockally.sdk.model.UpdateMailboxRequest
-import com.lockally.sdk.model.VacationResponder
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -291,77 +288,6 @@ open class MailboxesApi(basePath: kotlin.String = defaultBasePath, client: Call.
     }
 
     /**
-     * DELETE /v1/mailboxes/{email}/vacation
-     * Remove the vacation responder
-     * Idempotent, 204 whether or not a row existed.
-     * @param email 
-     * @return void
-     * @throws IllegalStateException If the request is not correctly configured
-     * @throws IOException Rethrows the OkHttp execute method exception
-     * @throws UnsupportedOperationException If the API returns an informational or redirection response
-     * @throws ClientException If the API returns a client error response
-     * @throws ServerException If the API returns a server error response
-     */
-    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun deleteVacationResponder(email: kotlin.String) : Unit = withContext(Dispatchers.IO) {
-        val localVarResponse = deleteVacationResponderWithHttpInfo(email = email)
-
-        return@withContext when (localVarResponse.responseType) {
-            ResponseType.Success -> Unit
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
-            }
-        }
-    }
-
-    /**
-     * DELETE /v1/mailboxes/{email}/vacation
-     * Remove the vacation responder
-     * Idempotent, 204 whether or not a row existed.
-     * @param email 
-     * @return ApiResponse<Unit?>
-     * @throws IllegalStateException If the request is not correctly configured
-     * @throws IOException Rethrows the OkHttp execute method exception
-     */
-    @Throws(IllegalStateException::class, IOException::class)
-    suspend fun deleteVacationResponderWithHttpInfo(email: kotlin.String) : ApiResponse<Unit?> = withContext(Dispatchers.IO) {
-        val localVariableConfig = deleteVacationResponderRequestConfig(email = email)
-
-        return@withContext request<Unit, Unit>(
-            localVariableConfig
-        )
-    }
-
-    /**
-     * To obtain the request config of the operation deleteVacationResponder
-     *
-     * @param email 
-     * @return RequestConfig
-     */
-    fun deleteVacationResponderRequestConfig(email: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-        localVariableHeaders["Accept"] = "application/problem+json"
-
-        return RequestConfig(
-            method = RequestMethod.DELETE,
-            path = "/v1/mailboxes/{email}/vacation".replace("{"+"email"+"}", encodeURIComponent(email.toString())),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            requiresAuthentication = true,
-            body = localVariableBody
-        )
-    }
-
-    /**
      * GET /v1/mailboxes/{email}/export/download
      * Download a previously-issued mailbox export
      * Public endpoint (no Authorization header). Validates the one-shot token from the URL, marks it used, and streams an mbox file. Second GET with the same token returns 404, tokens are single-use. 
@@ -587,79 +513,6 @@ open class MailboxesApi(basePath: kotlin.String = defaultBasePath, client: Call.
     }
 
     /**
-     * GET /v1/mailboxes/{email}/vacation
-     * Get the vacation responder
-     * Returns the stored vacation rule or 404 if none is set.
-     * @param email 
-     * @return VacationResponder
-     * @throws IllegalStateException If the request is not correctly configured
-     * @throws IOException Rethrows the OkHttp execute method exception
-     * @throws UnsupportedOperationException If the API returns an informational or redirection response
-     * @throws ClientException If the API returns a client error response
-     * @throws ServerException If the API returns a server error response
-     */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getVacationResponder(email: kotlin.String) : VacationResponder = withContext(Dispatchers.IO) {
-        val localVarResponse = getVacationResponderWithHttpInfo(email = email)
-
-        return@withContext when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as VacationResponder
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
-            }
-        }
-    }
-
-    /**
-     * GET /v1/mailboxes/{email}/vacation
-     * Get the vacation responder
-     * Returns the stored vacation rule or 404 if none is set.
-     * @param email 
-     * @return ApiResponse<VacationResponder?>
-     * @throws IllegalStateException If the request is not correctly configured
-     * @throws IOException Rethrows the OkHttp execute method exception
-     */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(IllegalStateException::class, IOException::class)
-    suspend fun getVacationResponderWithHttpInfo(email: kotlin.String) : ApiResponse<VacationResponder?> = withContext(Dispatchers.IO) {
-        val localVariableConfig = getVacationResponderRequestConfig(email = email)
-
-        return@withContext request<Unit, VacationResponder>(
-            localVariableConfig
-        )
-    }
-
-    /**
-     * To obtain the request config of the operation getVacationResponder
-     *
-     * @param email 
-     * @return RequestConfig
-     */
-    fun getVacationResponderRequestConfig(email: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-        localVariableHeaders["Accept"] = "application/json, application/problem+json"
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/v1/mailboxes/{email}/vacation".replace("{"+"email"+"}", encodeURIComponent(email.toString())),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            requiresAuthentication = true,
-            body = localVariableBody
-        )
-    }
-
-    /**
      * GET /v1/mailboxes
      * List mailboxes
      * Returns mailboxes under the calling tenant, active and soft-deleted. &#x60;?limit&#x3D;N&#x60; between 1 and 200 (default 50). 
@@ -811,76 +664,6 @@ open class MailboxesApi(basePath: kotlin.String = defaultBasePath, client: Call.
     }
 
     /**
-     * GET /v1/vacation
-     * List all vacation responders
-     * Returns every vacation responder for the calling tenant.
-     * @return ListVacationResponders200Response
-     * @throws IllegalStateException If the request is not correctly configured
-     * @throws IOException Rethrows the OkHttp execute method exception
-     * @throws UnsupportedOperationException If the API returns an informational or redirection response
-     * @throws ClientException If the API returns a client error response
-     * @throws ServerException If the API returns a server error response
-     */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun listVacationResponders() : ListVacationResponders200Response = withContext(Dispatchers.IO) {
-        val localVarResponse = listVacationRespondersWithHttpInfo()
-
-        return@withContext when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as ListVacationResponders200Response
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
-            }
-        }
-    }
-
-    /**
-     * GET /v1/vacation
-     * List all vacation responders
-     * Returns every vacation responder for the calling tenant.
-     * @return ApiResponse<ListVacationResponders200Response?>
-     * @throws IllegalStateException If the request is not correctly configured
-     * @throws IOException Rethrows the OkHttp execute method exception
-     */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(IllegalStateException::class, IOException::class)
-    suspend fun listVacationRespondersWithHttpInfo() : ApiResponse<ListVacationResponders200Response?> = withContext(Dispatchers.IO) {
-        val localVariableConfig = listVacationRespondersRequestConfig()
-
-        return@withContext request<Unit, ListVacationResponders200Response>(
-            localVariableConfig
-        )
-    }
-
-    /**
-     * To obtain the request config of the operation listVacationResponders
-     *
-     * @return RequestConfig
-     */
-    fun listVacationRespondersRequestConfig() : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-        localVariableHeaders["Accept"] = "application/json, application/problem+json"
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/v1/vacation",
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            requiresAuthentication = true,
-            body = localVariableBody
-        )
-    }
-
-    /**
      * DELETE /v1/mailboxes/{email}/members/{memberEmail}
      * Remove a shared mailbox member
      * 
@@ -947,83 +730,6 @@ open class MailboxesApi(basePath: kotlin.String = defaultBasePath, client: Call.
         return RequestConfig(
             method = RequestMethod.DELETE,
             path = "/v1/mailboxes/{email}/members/{memberEmail}".replace("{"+"email"+"}", encodeURIComponent(email.toString())).replace("{"+"memberEmail"+"}", encodeURIComponent(memberEmail.toString())),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            requiresAuthentication = true,
-            body = localVariableBody
-        )
-    }
-
-    /**
-     * PUT /v1/mailboxes/{email}/vacation
-     * Set the vacation responder
-     * Upsert, same endpoint creates or replaces the rule. Clears &#x60;synced_at&#x60;; the rule is staged until a later sync pushes it to the mail server. 
-     * @param email 
-     * @param setVacationResponderRequest 
-     * @return VacationResponder
-     * @throws IllegalStateException If the request is not correctly configured
-     * @throws IOException Rethrows the OkHttp execute method exception
-     * @throws UnsupportedOperationException If the API returns an informational or redirection response
-     * @throws ClientException If the API returns a client error response
-     * @throws ServerException If the API returns a server error response
-     */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun setVacationResponder(email: kotlin.String, setVacationResponderRequest: SetVacationResponderRequest) : VacationResponder = withContext(Dispatchers.IO) {
-        val localVarResponse = setVacationResponderWithHttpInfo(email = email, setVacationResponderRequest = setVacationResponderRequest)
-
-        return@withContext when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as VacationResponder
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
-            }
-        }
-    }
-
-    /**
-     * PUT /v1/mailboxes/{email}/vacation
-     * Set the vacation responder
-     * Upsert, same endpoint creates or replaces the rule. Clears &#x60;synced_at&#x60;; the rule is staged until a later sync pushes it to the mail server. 
-     * @param email 
-     * @param setVacationResponderRequest 
-     * @return ApiResponse<VacationResponder?>
-     * @throws IllegalStateException If the request is not correctly configured
-     * @throws IOException Rethrows the OkHttp execute method exception
-     */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(IllegalStateException::class, IOException::class)
-    suspend fun setVacationResponderWithHttpInfo(email: kotlin.String, setVacationResponderRequest: SetVacationResponderRequest) : ApiResponse<VacationResponder?> = withContext(Dispatchers.IO) {
-        val localVariableConfig = setVacationResponderRequestConfig(email = email, setVacationResponderRequest = setVacationResponderRequest)
-
-        return@withContext request<SetVacationResponderRequest, VacationResponder>(
-            localVariableConfig
-        )
-    }
-
-    /**
-     * To obtain the request config of the operation setVacationResponder
-     *
-     * @param email 
-     * @param setVacationResponderRequest 
-     * @return RequestConfig
-     */
-    fun setVacationResponderRequestConfig(email: kotlin.String, setVacationResponderRequest: SetVacationResponderRequest) : RequestConfig<SetVacationResponderRequest> {
-        val localVariableBody = setVacationResponderRequest
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-        localVariableHeaders["Content-Type"] = "application/json"
-        localVariableHeaders["Accept"] = "application/json, application/problem+json"
-
-        return RequestConfig(
-            method = RequestMethod.PUT,
-            path = "/v1/mailboxes/{email}/vacation".replace("{"+"email"+"}", encodeURIComponent(email.toString())),
             query = localVariableQuery,
             headers = localVariableHeaders,
             requiresAuthentication = true,

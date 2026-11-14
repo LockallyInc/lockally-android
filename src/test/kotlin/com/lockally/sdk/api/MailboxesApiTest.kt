@@ -32,13 +32,10 @@ import com.lockally.sdk.model.CreateMailboxRequest
 import com.lockally.sdk.model.ExportMailbox201Response
 import com.lockally.sdk.model.ListMailboxes200Response
 import com.lockally.sdk.model.ListSharedMembers200Response
-import com.lockally.sdk.model.ListVacationResponders200Response
 import com.lockally.sdk.model.Mailbox
 import com.lockally.sdk.model.Problem
-import com.lockally.sdk.model.SetVacationResponderRequest
 import com.lockally.sdk.model.SharedMember
 import com.lockally.sdk.model.UpdateMailboxRequest
-import com.lockally.sdk.model.VacationResponder
 
 class MailboxesApiTest : ShouldSpec() {
     init {
@@ -69,13 +66,6 @@ class MailboxesApiTest : ShouldSpec() {
             //apiInstance.deleteMailbox(email)
         }
 
-        // to test deleteVacationResponder
-        should("test deleteVacationResponder") {
-            // uncomment below to test deleteVacationResponder
-            //val email : kotlin.String = email_example // kotlin.String | 
-            //apiInstance.deleteVacationResponder(email)
-        }
-
         // to test downloadMailboxExport
         should("test downloadMailboxExport") {
             // uncomment below to test downloadMailboxExport
@@ -101,14 +91,6 @@ class MailboxesApiTest : ShouldSpec() {
             //result shouldBe ("TODO")
         }
 
-        // to test getVacationResponder
-        should("test getVacationResponder") {
-            // uncomment below to test getVacationResponder
-            //val email : kotlin.String = email_example // kotlin.String | 
-            //val result : VacationResponder = apiInstance.getVacationResponder(email)
-            //result shouldBe ("TODO")
-        }
-
         // to test listMailboxes
         should("test listMailboxes") {
             // uncomment below to test listMailboxes
@@ -125,28 +107,12 @@ class MailboxesApiTest : ShouldSpec() {
             //result shouldBe ("TODO")
         }
 
-        // to test listVacationResponders
-        should("test listVacationResponders") {
-            // uncomment below to test listVacationResponders
-            //val result : ListVacationResponders200Response = apiInstance.listVacationResponders()
-            //result shouldBe ("TODO")
-        }
-
         // to test removeSharedMember
         should("test removeSharedMember") {
             // uncomment below to test removeSharedMember
             //val email : kotlin.String = email_example // kotlin.String | 
             //val memberEmail : kotlin.String = memberEmail_example // kotlin.String | 
             //apiInstance.removeSharedMember(email, memberEmail)
-        }
-
-        // to test setVacationResponder
-        should("test setVacationResponder") {
-            // uncomment below to test setVacationResponder
-            //val email : kotlin.String = email_example // kotlin.String | 
-            //val setVacationResponderRequest : SetVacationResponderRequest =  // SetVacationResponderRequest | 
-            //val result : VacationResponder = apiInstance.setVacationResponder(email, setVacationResponderRequest)
-            //result shouldBe ("TODO")
         }
 
         // to test updateMailbox

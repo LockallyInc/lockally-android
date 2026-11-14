@@ -160,7 +160,6 @@ docs/ListSharedMembers200Response.md
 docs/ListSuppressions200Response.md
 docs/ListTemplates200Response.md
 docs/ListUsers200Response.md
-docs/ListVacationResponders200Response.md
 docs/ListWebhooks200Response.md
 docs/Mailbox.md
 docs/MailboxGrant.md
@@ -204,7 +203,6 @@ docs/SendEmailBatchRequest.md
 docs/SendEmailRequest.md
 docs/SendEmailRequestAttachmentsInner.md
 docs/SendMessage.md
-docs/SetVacationResponderRequest.md
 docs/SharedMember.md
 docs/SignupApi.md
 docs/SignupRequest.md
@@ -251,8 +249,6 @@ docs/UpdateWebhookRequest.md
 docs/User.md
 docs/UserEvent.md
 docs/UsersApi.md
-docs/VacationParams.md
-docs/VacationResponder.md
 docs/Webhook.md
 docs/WebhooksApi.md
 docs/Whoami.md
@@ -455,7 +451,6 @@ src/main/kotlin/com/lockally/sdk/model/ListSharedMembers200Response.kt
 src/main/kotlin/com/lockally/sdk/model/ListSuppressions200Response.kt
 src/main/kotlin/com/lockally/sdk/model/ListTemplates200Response.kt
 src/main/kotlin/com/lockally/sdk/model/ListUsers200Response.kt
-src/main/kotlin/com/lockally/sdk/model/ListVacationResponders200Response.kt
 src/main/kotlin/com/lockally/sdk/model/ListWebhooks200Response.kt
 src/main/kotlin/com/lockally/sdk/model/Mailbox.kt
 src/main/kotlin/com/lockally/sdk/model/MailboxGrant.kt
@@ -495,7 +490,6 @@ src/main/kotlin/com/lockally/sdk/model/SendEmailBatchRequest.kt
 src/main/kotlin/com/lockally/sdk/model/SendEmailRequest.kt
 src/main/kotlin/com/lockally/sdk/model/SendEmailRequestAttachmentsInner.kt
 src/main/kotlin/com/lockally/sdk/model/SendMessage.kt
-src/main/kotlin/com/lockally/sdk/model/SetVacationResponderRequest.kt
 src/main/kotlin/com/lockally/sdk/model/SharedMember.kt
 src/main/kotlin/com/lockally/sdk/model/SignupRequest.kt
 src/main/kotlin/com/lockally/sdk/model/SimulatedInbound.kt
@@ -536,8 +530,6 @@ src/main/kotlin/com/lockally/sdk/model/UpdateUserRequest.kt
 src/main/kotlin/com/lockally/sdk/model/UpdateWebhookRequest.kt
 src/main/kotlin/com/lockally/sdk/model/User.kt
 src/main/kotlin/com/lockally/sdk/model/UserEvent.kt
-src/main/kotlin/com/lockally/sdk/model/VacationParams.kt
-src/main/kotlin/com/lockally/sdk/model/VacationResponder.kt
 src/main/kotlin/com/lockally/sdk/model/Webhook.kt
 src/main/kotlin/com/lockally/sdk/model/Whoami.kt
 src/main/kotlin/com/lockally/sdk/model/WhoamiKey.kt
@@ -712,7 +704,6 @@ src/test/kotlin/com/lockally/sdk/model/ListSharedMembers200ResponseTest.kt
 src/test/kotlin/com/lockally/sdk/model/ListSuppressions200ResponseTest.kt
 src/test/kotlin/com/lockally/sdk/model/ListTemplates200ResponseTest.kt
 src/test/kotlin/com/lockally/sdk/model/ListUsers200ResponseTest.kt
-src/test/kotlin/com/lockally/sdk/model/ListVacationResponders200ResponseTest.kt
 src/test/kotlin/com/lockally/sdk/model/ListWebhooks200ResponseTest.kt
 src/test/kotlin/com/lockally/sdk/model/MailboxGrantListTest.kt
 src/test/kotlin/com/lockally/sdk/model/MailboxGrantTest.kt
@@ -752,7 +743,6 @@ src/test/kotlin/com/lockally/sdk/model/SendEmailBatchRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/SendEmailRequestAttachmentsInnerTest.kt
 src/test/kotlin/com/lockally/sdk/model/SendEmailRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/SendMessageTest.kt
-src/test/kotlin/com/lockally/sdk/model/SetVacationResponderRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/SharedMemberTest.kt
 src/test/kotlin/com/lockally/sdk/model/SignupRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/SimulatedInboundTest.kt
@@ -793,8 +783,6 @@ src/test/kotlin/com/lockally/sdk/model/UpdateUserRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/UpdateWebhookRequestTest.kt
 src/test/kotlin/com/lockally/sdk/model/UserEventTest.kt
 src/test/kotlin/com/lockally/sdk/model/UserTest.kt
-src/test/kotlin/com/lockally/sdk/model/VacationParamsTest.kt
-src/test/kotlin/com/lockally/sdk/model/VacationResponderTest.kt
 src/test/kotlin/com/lockally/sdk/model/WebhookTest.kt
 src/test/kotlin/com/lockally/sdk/model/WhoamiKeyTest.kt
 src/test/kotlin/com/lockally/sdk/model/WhoamiTenantTest.kt
