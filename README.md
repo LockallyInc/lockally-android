@@ -22,7 +22,7 @@ It's a pure-JVM library, so it works on Android **and** any Kotlin/JVM backend.
 
 ```kotlin
 dependencies {
-    implementation("com.lockally:lockally-android:0.1.0")
+    implementation("com.lockally:lockally-android:0.5.0")
 }
 ```
 

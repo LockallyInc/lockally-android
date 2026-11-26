@@ -144,7 +144,7 @@ open class AiApi(basePath: kotlin.String = defaultBasePath, client: Call.Factory
     /**
      * POST /v1/billing/ai-units/checkout
      * Buy prepaid AI units
-     * Body: {\&quot;bundle\&quot;: \&quot;100|500|2000\&quot;}. One classification &#x3D; one unit; bundles expire after 6 months. Admin session required. 503 until Paystack billing is configured.
+     * Body: {\&quot;bundle\&quot;: \&quot;300|1500|6000\&quot;}. One classification &#x3D; one unit; bundles expire after 3 months. Admin session required. 503 until Paystack billing is configured; 409 while prepaid AI units are not available on this server.
      * @return CreateAiUnitsCheckout200Response
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
@@ -175,7 +175,7 @@ open class AiApi(basePath: kotlin.String = defaultBasePath, client: Call.Factory
     /**
      * POST /v1/billing/ai-units/checkout
      * Buy prepaid AI units
-     * Body: {\&quot;bundle\&quot;: \&quot;100|500|2000\&quot;}. One classification &#x3D; one unit; bundles expire after 6 months. Admin session required. 503 until Paystack billing is configured.
+     * Body: {\&quot;bundle\&quot;: \&quot;300|1500|6000\&quot;}. One classification &#x3D; one unit; bundles expire after 3 months. Admin session required. 503 until Paystack billing is configured; 409 while prepaid AI units are not available on this server.
      * @return ApiResponse<CreateAiUnitsCheckout200Response?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception

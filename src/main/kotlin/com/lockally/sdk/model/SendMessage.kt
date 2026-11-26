@@ -32,8 +32,9 @@ import kotlinx.serialization.Contextual
 /**
  * 
  *
- * @param from 
+ * @param from Sender address, alone or as `Acme Orders <orders@acme.com>`.
  * @param to 
+ * @param fromName Display name shown next to `from`. Must match a name given in `from`. Cannot contain `@` or control characters.
  * @param cc 
  * @param bcc 
  * @param subject 
@@ -52,11 +53,16 @@ import kotlinx.serialization.Contextual
 
 data class SendMessage (
 
+    /* Sender address, alone or as `Acme Orders <orders@acme.com>`. */
     @SerialName(value = "from")
     val from: kotlin.String,
 
     @SerialName(value = "to")
     val to: kotlin.collections.List<kotlin.String>,
+
+    /* Display name shown next to `from`. Must match a name given in `from`. Cannot contain `@` or control characters. */
+    @SerialName(value = "from_name")
+    val fromName: kotlin.String? = null,
 
     @SerialName(value = "cc")
     val cc: kotlin.collections.List<kotlin.String>? = null,

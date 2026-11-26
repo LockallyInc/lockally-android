@@ -34,7 +34,7 @@ class SendEmailRequestTest : ShouldSpec() {
         // uncomment below to create an instance of SendEmailRequest
         //val modelInstance = SendEmailRequest()
 
-        // to test the property `from`
+        // to test the property `from` - Sender address, alone (`orders@acme.com`) or with a display name (`Acme Orders <orders@acme.com>`). Only the address is checked against your sender rules and used as the envelope sender.
         should("test from") {
             // uncomment below to test the property
             //modelInstance.from shouldBe ("TODO")
@@ -44,6 +44,12 @@ class SendEmailRequestTest : ShouldSpec() {
         should("test to") {
             // uncomment below to test the property
             //modelInstance.to shouldBe ("TODO")
+        }
+
+        // to test the property `fromName` - Display name recipients see next to `from`, e.g. `Acme Orders`. The same as giving it in `from`; if you do both, the names must match (400 `Conflicting from name`). Cannot contain `@` or control characters. Encoded and quoted for you, so accents, commas and quotes are safe.
+        should("test fromName") {
+            // uncomment below to test the property
+            //modelInstance.fromName shouldBe ("TODO")
         }
 
         // to test the property `cc`

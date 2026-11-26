@@ -34,7 +34,7 @@ class SendMessageTest : ShouldSpec() {
         // uncomment below to create an instance of SendMessage
         //val modelInstance = SendMessage()
 
-        // to test the property `from`
+        // to test the property `from` - Sender address, alone or as `Acme Orders <orders@acme.com>`.
         should("test from") {
             // uncomment below to test the property
             //modelInstance.from shouldBe ("TODO")
@@ -44,6 +44,12 @@ class SendMessageTest : ShouldSpec() {
         should("test to") {
             // uncomment below to test the property
             //modelInstance.to shouldBe ("TODO")
+        }
+
+        // to test the property `fromName` - Display name shown next to `from`. Must match a name given in `from`. Cannot contain `@` or control characters.
+        should("test fromName") {
+            // uncomment below to test the property
+            //modelInstance.fromName shouldBe ("TODO")
         }
 
         // to test the property `cc`

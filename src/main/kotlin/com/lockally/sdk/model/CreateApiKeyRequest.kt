@@ -61,7 +61,7 @@ data class CreateApiKeyRequest (
     /**
      * Allowed scopes on this key.
      *
-     * Values: tenantColonRead,tenantColonAdmin,mailboxesColonRead,mailboxesColonWrite,directoryColonSync,inboxesColonRead,inboxesColonWrite,sendColonRead,sendColonWrite,templatesColonRead,templatesColonWrite,suppressionsColonRead,suppressionsColonWrite,webhooksColonRead,webhooksColonWrite,domainsColonRead,domainsColonWrite,migrationsColonRead,migrationsColonWrite
+     * Values: tenantColonRead,tenantColonAdmin,mailboxesColonRead,mailboxesColonWrite,directoryColonSync,inboxesColonRead,inboxesColonDraft,inboxesColonWrite,sendColonRead,sendColonWrite,templatesColonRead,templatesColonWrite,suppressionsColonRead,suppressionsColonWrite,webhooksColonRead,webhooksColonWrite,domainsColonRead,domainsColonWrite,migrationsColonRead,migrationsColonWrite
      */
     @Serializable
     enum class Scopes(val value: kotlin.String) {
@@ -71,6 +71,7 @@ data class CreateApiKeyRequest (
         @SerialName(value = "mailboxes:write") mailboxesColonWrite("mailboxes:write"),
         @SerialName(value = "directory:sync") directoryColonSync("directory:sync"),
         @SerialName(value = "inboxes:read") inboxesColonRead("inboxes:read"),
+        @SerialName(value = "inboxes:draft") inboxesColonDraft("inboxes:draft"),
         @SerialName(value = "inboxes:write") inboxesColonWrite("inboxes:write"),
         @SerialName(value = "send:read") sendColonRead("send:read"),
         @SerialName(value = "send:write") sendColonWrite("send:write"),

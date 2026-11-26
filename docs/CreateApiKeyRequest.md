@@ -14,7 +14,7 @@
 ## Enum: scopes
 | Name | Value |
 | ---- | ----- |
-| scopes | tenant:read, tenant:admin, mailboxes:read, mailboxes:write, directory:sync, inboxes:read, inboxes:write, send:read, send:write, templates:read, templates:write, suppressions:read, suppressions:write, webhooks:read, webhooks:write, domains:read, domains:write, migrations:read, migrations:write |
+| scopes | tenant:read, tenant:admin, mailboxes:read, mailboxes:write, directory:sync, inboxes:read, inboxes:draft, inboxes:write, send:read, send:write, templates:read, templates:write, suppressions:read, suppressions:write, webhooks:read, webhooks:write, domains:read, domains:write, migrations:read, migrations:write |
 
 
 
